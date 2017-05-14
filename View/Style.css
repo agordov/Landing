@@ -1,0 +1,45 @@
+.root {
+    -fx-background-color: #404042;
+}
+
+.button{
+    -fx-border-width:1px 1px 1px 1px ;
+    -fx-border-color: #BDDA1C;
+    -fx-border-radius: 5px;
+    -fx-background-color: 404042;
+    -fx-text-fill: white;
+}
+.button:hover{
+    -fx-border-radius: 5px;
+    -fx-background-color: white;
+    -fx-text-fill: #404042;
+}
+.button:pressed{
+    -fx-border-radius: 5px;
+    -fx-background-color: #BDDA1C;
+    -fx-text-fill: #404042;
+}
+.textField{
+    //-fx-border-width:2px 2px 2px 2px ;
+    //-fx-border-color: #BDDA1C;
+}
+.btnBox{
+    //-fx-border-width:0px 3px 0px 0px ;
+    //-fx-border-color: #777779;
+}
+.mainPane{
+    -fx-border-width:0px 0px 0px 3px ;
+    -fx-border-color: #777779;
+}
+.label{
+    -fx-text-fill: #BDDA1C;
+}
+.valuesPane{
+    -fx-border-width:15px 0px 0px 0px ;
+    -fx-border-color: #404042;
+}
+.parametersPane{
+    -fx-border-width:15px 0px 0px 0px ;
+    -fx-border-color: #404042;
+
+}

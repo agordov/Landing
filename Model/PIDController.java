@@ -23,7 +23,6 @@ public class PIDController {
     public Tuple<Double, Double> countForces(double dX, double dY) {
         double Fx;
         double Fy;
-        integrate(dX, dY);
         Fx = p + i * integral.getX() + d * derivative(dX);
         Fy = p + i * integral.getY() + d * derivative(dY);
         return new Tuple<>(Fx > maxFx ? maxFx : Fx, Fy > maxFy ? maxFy : Fy);

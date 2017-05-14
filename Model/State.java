@@ -1,21 +1,12 @@
 package Landing.Model;
 
 public class State {
-    double x;
-    double y;
-    Tuple<Double, Double> coordinates;
-    double vX;
-    double vY;
-    Tuple<Double, Double> velocity;
-    double aX;
-    double aY;
-    Tuple<Double, Double> acceleration;
-    double fOutX;
-    double fOutY;
-    Tuple<Double, Double> forceOut;
-    double fInX;
-    double fInY;
-    Tuple<Double, Double> forceIn;
+
+    private Tuple<Double, Double> coordinates;
+    private Tuple<Double, Double> velocity;
+    private Tuple<Double, Double> acceleration;
+    private Tuple<Double, Double> forceOut;
+    private Tuple<Double, Double> forceIn;
     double t;
     double m; //если мы всё же запилим с изменяющейся массой
 
@@ -73,7 +64,6 @@ public class State {
 
         return forceOut;
     }
-
 
     public double getM() {
         return m;

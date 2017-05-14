@@ -2,50 +2,40 @@ package Landing.Model;
 
 public class PIDController {
 
-    private double pX;
-    private double pY;
+    private double p;
+    private Tuple<Double, Double> integral;
     private double i;
     private double d;
-    private double dX;
     private double dT;
     private double maxFx;
     private double maxFy;
 
-    public PIDController(double pX, double pY, double i, double d, double maxFx, double maxFy) {
-        this.pX = pX;
-        this.pY = pY;
+    public PIDController(double p, double i, double d, double maxFx, double maxFy, double dT) {
+        this.p = p;
         this.i = i;
         this.d = d;
+        this.integral = new Tuple<>(0d, 0d);
         this.maxFx = maxFx;
         this.maxFy = maxFy;
+        this.dT = dT;
     }
 
-    public Tuple<Double, Double> countForce(double dX) {
-        double Fx = 0;
-        double Fy = 0;
-        Fx = pX + i * integral() + d * derivative(dX);
-        return new Tuple<>(Fx, Fy);
+    public Tuple<Double, Double> countForces(double dX, double dY) {
+        double Fx;
+        double Fy;
+        integrate(dX, dY);
+        Fx = p + i * integral.getLeft() + d * derivative(dX);
+        Fy = p + i * integral.getRight() + d * derivative(dY);
+        return new Tuple<>(Fx > maxFx ? maxFx : Fx, Fy > maxFy ? maxFy : Fy);
     }
 
-    private double derivative(double x) {
-        return x/dT;
+    private double derivative(double dV) {
+        return dV/dT;
     }
 
-    private double integral() {
-        return 0;
-    }
-
-    public double getpX() {
-        return pX;
-    }
-
-    public void setpY(double pY) {
-        this.pY = pY;
-    }
-
-    public void setpX(double pX) {
-
-        this.pX = pX;
+    private void integrate(double dX, double dY) {
+        integral.setLeft(integral.getLeft() + dX * dT);
+        integral.setRight(integral.getRight() + dY * dT);
     }
 
     public double getI() {
@@ -56,8 +46,8 @@ public class PIDController {
         return d;
     }
 
-    public double getpY() {
-        return pY;
+    public double getP() {
+        return p;
     }
 
     public void setI(double i) {

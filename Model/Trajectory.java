@@ -5,9 +5,8 @@ import java.util.List;
 
 public class Trajectory {
 
-    private final double G = 6.67 * 1e-11;
+    private static final double G = 6.67 * 1e-11;
     //надо подумать над названиями переменных, а то жопа
-
 
     public Trajectory(double x, double y, double vX, double vY, double aX, double aY, double fOutX, double fOutY, double t, double dt, double massOfPlanet, double radiusOfPlanet, double airK) {
         //State state = new State(x, y, vX, vY, aX, aY, fOutX, fOutY, 0, 0, t);
@@ -35,11 +34,11 @@ public class Trajectory {
             double x = state.getCoordinates().getRight() + state.getVelocity().getRight() * dt / 2;
             double y = state.getCoordinates().getLeft() + state.getVelocity().getLeft() * dt / 2;
 
-            state.setCoordinates(new Tuple<Double, Double>(x, y));
-            state.setVelocity(new Tuple<Double, Double>(vX, vY));
-            state.setAcceleration(new Tuple<Double, Double>(aX, aY));
-            state.setForceIn(new Tuple<Double, Double>(fInX, fInY));
-            state.setForceOut(new Tuple<Double, Double>(fOutX, fOutY));
+            state.setCoordinates(new Tuple<>(x, y));
+            state.setVelocity(new Tuple<>(vX, vY));
+            state.setAcceleration(new Tuple<>(aX, aY));
+            state.setForceIn(new Tuple<>(fInX, fInY));
+            state.setForceOut(new Tuple<>(fOutX, fOutY));
             state.setT(state.getT() + dt);
 
             dr = Math.sqrt((state.getCoordinates().getRight() - radiusOfPlanet) * (state.getCoordinates().getRight() - radiusOfPlanet) + state.getCoordinates().getLeft() * state.getCoordinates().getLeft());

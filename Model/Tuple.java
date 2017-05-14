@@ -9,6 +9,14 @@ public class Tuple<L, R> {
         this.right = right;
     }
 
+    public void setLeft(L left) {
+        this.left = left;
+    }
+
+    public void setRight(R right) {
+        this.right =right;
+    }
+
     public L getLeft() {
         return left;
     }

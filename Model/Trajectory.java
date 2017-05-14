@@ -17,7 +17,7 @@ public class Trajectory {
     //а тут я захерачу конструктор из которого буду вызывать generateTrajectory
 
     private void generateTrajectory(State startState, double dt, double massOfPlanet, double radiusOfPlanet, double airK) { // стоит ли мне dt передавать отдельно, или занести в статус?
-        double dr = Math.sqrt((startState.getCoordinates().getRight() - radiusOfPlanet) * (startState.getCoordinates().getRight() - radiusOfPlanet) + startState.getCoordinates().getLeft() * startState.getCoordinates().getLeft()); // типа приземляюсь в точку (R, 0)
+        double dr = Math.sqrt((startState.getCoordinates().getY() - radiusOfPlanet) * (startState.getCoordinates().getY() - radiusOfPlanet) + startState.getCoordinates().getX() * startState.getCoordinates().getX()); // типа приземляюсь в точку (R, 0)
         // чё делать с 1-ым силами тяги? сразу у Лёхи брать или 0 сделать изначально
         trajectory.add(startState);
         while(dr > 0) {
@@ -25,14 +25,14 @@ public class Trajectory {
 
             double fInX = 1;// беру у Лёхи
             double fInY = 1;//
-            double fOutX = G * massOfPlanet * state.getM() / (state.getCoordinates().getLeft() * state.getCoordinates().getLeft() + state.getCoordinates().getRight() * state.getCoordinates().getRight()) - airK * state.getCoordinates().getRight() * state.getCoordinates().getRight();
-            double fOutY = G * massOfPlanet * state.getM() / (state.getCoordinates().getLeft() * state.getCoordinates().getLeft() + state.getCoordinates().getRight() * state.getCoordinates().getRight()) - airK * state.getCoordinates().getLeft() * state.getCoordinates().getLeft();
-            double aX = (state.getForceIn().getRight() + state.getForceOut().getRight()) / state.getM();
-            double aY = (state.getForceIn().getLeft() + state.getForceOut().getLeft()) / state.getM();;
-            double vX = state.getVelocity().getRight() + state.getAcceleration().getRight() * dt;
-            double vY = state.getVelocity().getLeft() + state.getAcceleration().getLeft() * dt;;
-            double x = state.getCoordinates().getRight() + state.getVelocity().getRight() * dt / 2;
-            double y = state.getCoordinates().getLeft() + state.getVelocity().getLeft() * dt / 2;
+            double fOutX = G * massOfPlanet * state.getM() / (state.getCoordinates().getX() * state.getCoordinates().getX() + state.getCoordinates().getY() * state.getCoordinates().getY()) - airK * state.getCoordinates().getY() * state.getCoordinates().getY();
+            double fOutY = G * massOfPlanet * state.getM() / (state.getCoordinates().getX() * state.getCoordinates().getX() + state.getCoordinates().getY() * state.getCoordinates().getY()) - airK * state.getCoordinates().getX() * state.getCoordinates().getX();
+            double aX = (state.getForceIn().getY() + state.getForceOut().getY()) / state.getM();
+            double aY = (state.getForceIn().getX() + state.getForceOut().getX()) / state.getM();;
+            double vX = state.getVelocity().getY() + state.getAcceleration().getY() * dt;
+            double vY = state.getVelocity().getX() + state.getAcceleration().getX() * dt;;
+            double x = state.getCoordinates().getY() + state.getVelocity().getY() * dt / 2;
+            double y = state.getCoordinates().getX() + state.getVelocity().getX() * dt / 2;
 
             state.setCoordinates(new Tuple<>(x, y));
             state.setVelocity(new Tuple<>(vX, vY));
@@ -41,7 +41,7 @@ public class Trajectory {
             state.setForceOut(new Tuple<>(fOutX, fOutY));
             state.setT(state.getT() + dt);
 
-            dr = Math.sqrt((state.getCoordinates().getRight() - radiusOfPlanet) * (state.getCoordinates().getRight() - radiusOfPlanet) + state.getCoordinates().getLeft() * state.getCoordinates().getLeft());
+            dr = Math.sqrt((state.getCoordinates().getY() - radiusOfPlanet) * (state.getCoordinates().getY() - radiusOfPlanet) + state.getCoordinates().getX() * state.getCoordinates().getX());
             trajectory.add(state);
 
         }

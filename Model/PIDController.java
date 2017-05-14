@@ -24,8 +24,8 @@ public class PIDController {
         double Fx;
         double Fy;
         integrate(dX, dY);
-        Fx = p + i * integral.getLeft() + d * derivative(dX);
-        Fy = p + i * integral.getRight() + d * derivative(dY);
+        Fx = p + i * integral.getX() + d * derivative(dX);
+        Fy = p + i * integral.getY() + d * derivative(dY);
         return new Tuple<>(Fx > maxFx ? maxFx : Fx, Fy > maxFy ? maxFy : Fy);
     }
 
@@ -34,8 +34,8 @@ public class PIDController {
     }
 
     private void integrate(double dX, double dY) {
-        integral.setLeft(integral.getLeft() + dX * dT);
-        integral.setRight(integral.getRight() + dY * dT);
+        integral.setX(integral.getX() + dX * dT);
+        integral.setY(integral.getY() + dY * dT);
     }
 
     public double getI() {

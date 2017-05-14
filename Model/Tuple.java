@@ -1,27 +1,27 @@
 package Landing.Model;
 
 public class Tuple<L, R> {
-    private L left;
-    private R right;
+    private L x;
+    private R y;
 
-    Tuple(L left, R right) {
-        this.left = left;
-        this.right = right;
+    Tuple(L x, R y) {
+        this.x = x;
+        this.y = y;
     }
 
-    public void setLeft(L left) {
-        this.left = left;
+    public void setX(L x) {
+        this.x = x;
     }
 
-    public void setRight(R right) {
-        this.right =right;
+    public void setY(R y) {
+        this.y = y;
     }
 
-    public L getLeft() {
-        return left;
+    public L getX() {
+        return x;
     }
 
-    public R getRight() {
-        return right;
+    public R getY() {
+        return y;
     }
 }

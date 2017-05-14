@@ -33,17 +33,17 @@ public class MoveParams {
 
     private static final double G = 6.6e-11;
 
-    private double vx = generationOfParams(MAX_VX, MIN_VX);;
-    private double vy = generationOfParams(MAX_VY, MIN_VY);;
+    private double vx = generationOfParams(MAX_VX, MIN_VX);
+    private double vy = generationOfParams(MAX_VY, MIN_VY);
 
     private double zondMass = generationOfParams(MAX_ZONDMASS, MIN_ZONDMASS);
     private double planetMass = generationOfParams(MAX_PLANETMASS, MIN_PLANETMASS);
 
-    private double planetRadius = generationOfParams(MAX_PLANETRADIUS, MIN_PLANETRADIUS);;
+    private double planetRadius = generationOfParams(MAX_PLANETRADIUS, MIN_PLANETRADIUS);
     private double atmosphereRadius = planetRadius + generationOfParams(MAX_ATMOSPHERERADIUS, MIN_ATMOSPHERERADIUS);
 
-    private double x = planetRadius + generationOfParams(MAX_X, MIN_X);;
-    private double y = planetRadius + generationOfParams(MAX_Y, MIN_Y);;
+    private double x = planetRadius + generationOfParams(MAX_X, MIN_X);
+    private double y = planetRadius + generationOfParams(MAX_Y, MIN_Y);
 
     private double g = G * planetMass / Math.pow(planetRadius, 2);
     private double engineThrustY = zondMass * g;

@@ -3,7 +3,7 @@ package Landing.Control;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import landingProbe.view.View;
+import Landing.View.View;
 
 import java.util.List;
 

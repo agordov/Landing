@@ -1,5 +1,6 @@
 package Landing.View;
 
+import Landing.Control.Controller;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +18,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import landingProbe.controller.Controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -142,7 +142,7 @@ public class View extends Application {
     private static HBox addHBox(String textLabel, List<TextField> listOfFields){
         HBox hBox = new HBox();
         hBox.setSpacing(10);
-        hBox.setAlignment(Pos.CENTER_LEFT);
+        hBox.setAlignment(Pos.CENTER_RIGHT);
         Label label = new Label(textLabel);
         label.setWrapText(true);
         label.getStyleClass().add("label");

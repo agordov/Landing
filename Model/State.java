@@ -1,10 +1,5 @@
 package Landing.Model;
 
-/*
-*************************
-
- */
-
 public class State {
 
     private Tuple<Double, Double> coordinates;

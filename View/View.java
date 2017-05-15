@@ -1,11 +1,9 @@
 package Landing.View;
 
-import Landing.Control.Controller;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -18,6 +16,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import landingProbe.controller.Controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,14 +40,27 @@ public class View extends Application {
         Scene scene = new Scene(borderPane, 1000, 600);
         scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
         primaryStage.setScene(scene);
-
+        primaryStage.setTitle("Drone landing");
         primaryStage.show();
     }
     private BorderPane addMainPane(){
         BorderPane mainPane = new BorderPane();
         mainPane.getStyleClass().add("mainPane");
+        mainPane.setCenter(addChart(addCheckedValues()));
         mainPane.setBottom(addFlowPane());
         return mainPane;
+    }
+    private List<List<Double>> addCheckedValues(){
+        List<List<Double>> values = new ArrayList<>();
+        List<Double> xValues = new ArrayList<>();
+        List<Double> yValues = new ArrayList<>();
+        for(Double i = 0.0; i<1000;i++){
+            xValues.add(i);
+            yValues.add(i*i);
+        }
+        values.add(xValues);
+        values.add(yValues);
+        return values;
     }
     private FlowPane addFlowPane(){
         FlowPane flowPane = new FlowPane();
@@ -56,11 +68,12 @@ public class View extends Application {
         Button velBtn = addGraphButton("graph V(t)");
         Button powerBtn = addGraphButton("graph F(t)");
         Button controlBtn = addGraphButton("graph control(t)");
-        flowPane.setPadding(new Insets(10));
-        FlowPane.setMargin(velBtn, new Insets(0,10,0,10));
-        FlowPane.setMargin(powerBtn, new Insets(0,10,0,10));
-        FlowPane.setMargin(controlBtn, new Insets(0,10,0,10));
+        flowPane.setPadding(new Insets(5));
+        FlowPane.setMargin(velBtn, new Insets(5,10,5,10));
+        FlowPane.setMargin(powerBtn, new Insets(5,10,5,10));
+        FlowPane.setMargin(controlBtn, new Insets(5,10,5,10));
         flowPane.getChildren().addAll(velBtn, powerBtn, controlBtn);
+        flowPane.getStyleClass().add("graphButtons");
         return flowPane;
     }
     private Button addGraphButton(String textButton){
@@ -82,12 +95,13 @@ public class View extends Application {
 
         }
         series.setData(datas);
+        numberLineChart.getStyleClass().add("chart");
         numberLineChart.getData().add(series);
         return numberLineChart;
     }
     public static BorderPane addParametersPane(BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
         List<String> parameters = new ArrayList<>();
-        Collections.addAll(parameters, "posX", "PosY","powerX", "powerY", "MassProbe", "Radius","atmosphereRadius", "massPlanet");
+        Collections.addAll(parameters, "PosX", "PosY","PowerX", "PowerY", "MassProbe", "Radius","AtmosphereRadius", "MassPlanet");
 
         BorderPane leftPane = new BorderPane();
 
@@ -115,7 +129,7 @@ public class View extends Application {
     }
     public static BorderPane addValuesPane(BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
         List<String> parameters = new ArrayList<>();
-        Collections.addAll(parameters, "time", "maxSpeed","landingPositionX", "landingPositionY");
+        Collections.addAll(parameters, "Time", "MaxSpeed","LandingPositionX", "LandingPositionY");
         BorderPane leftPane = new BorderPane();
         HBox buttonBox = addBtnBox(borderPane, listOfParamFields, listOfValuesFields);
         leftPane.setTop(buttonBox);
@@ -134,25 +148,34 @@ public class View extends Application {
 
         vBox.setSpacing(10);
         for(String text:parameters){
-            HBox hBox = addHBox(text, listOfFields);
-            vBox.getChildren().add(hBox);
+            BorderPane borderPane = addTextPane(text, listOfFields);
+            vBox.getChildren().add(borderPane);
         }
         return vBox;
     }
-    private static HBox addHBox(String textLabel, List<TextField> listOfFields){
-        HBox hBox = new HBox();
-        hBox.setSpacing(10);
-        hBox.setAlignment(Pos.CENTER_RIGHT);
+    private static BorderPane addTextPane(String textLabel, List<TextField> listOfFields){
+        BorderPane borderPane = new BorderPane();
+        Label label = new Label(textLabel);
+
+        label.setWrapText(true);
+        label.getStyleClass().add("label");
+        borderPane.setLeft(addLabelPane(textLabel));
+        TextField textField = new TextField();
+        textField.getStyleClass().add("textField");
+        //textField.prefWidthProperty().bind(hBox.widthProperty().subtract(label.widthProperty()));;
+        borderPane.setRight(textField);
+        borderPane.setMaxWidth(320);
+        borderPane.setMinWidth(320);
+        listOfFields.add(textField);
+        return borderPane;
+    }
+    private static BorderPane addLabelPane(String textLabel){
+        BorderPane borderPane = new BorderPane();
         Label label = new Label(textLabel);
         label.setWrapText(true);
         label.getStyleClass().add("label");
-        TextField textField = new TextField();
-        //textField.prefWidthProperty().bind(hBox.widthProperty().subtract(label.widthProperty()));;
-        hBox.setMaxWidth(320);
-        hBox.setMinWidth(320);
-        listOfFields.add(textField);
-        hBox.getChildren().addAll(label,textField);
-        return hBox;
+        borderPane.setCenter(label);
+        return borderPane;
     }
     private static HBox addBtnBox(BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
         HBox hBox = new HBox();

@@ -7,21 +7,29 @@ public class Trajectory {
 
     private List<State> trajectory = new ArrayList<>();
 
-    public Trajectory(State startState, PIDController startPid, MoveParams startParams) {
-        State state = new State(startState);
-        generateTrajectory(state, startPid, startParams.getdT(), startParams.getPlanetRadius(), startParams.getAtmosphereRadius(), startParams.getAirK(), startParams.getG());
+    public Trajectory(PIDController startPid, MoveParams startParams) {
+        generateTrajectory(startPid, startParams);
     }
 
 
-    private void generateTrajectory(State startState, PIDController startPid, double dt, double radiusOfPlanet, double radiusOfAtmosphere, double airK, double g) { // стоит ли мне dt передавать отдельно, или занести в статус?
-        double dr = Math.sqrt(Math.pow(startState.getCoordinates().getY() - radiusOfPlanet, 2) + Math.pow(startState.getCoordinates().getX(), 2)); // типа приземляюсь в точку (0, R)
-        trajectory.add(startState);
-        while(dr > 0) {
+    private void generateTrajectory(PIDController startPid, MoveParams startParams) { // стоит ли мне dt передавать отдельно, или занести в статус?
+        double dr = Math.sqrt(Math.pow(startParams.getY() - startParams.getPlanetRadius(), 2) + Math.pow(startParams.getX(), 2)); // типа приземляюсь в точку (0, R)
+        trajectory.add(new State(new Tuple<>(startParams.getX(), startParams.getY()), new Tuple<>(startParams.getVx(), startParams.getVy()), new Tuple<>(0d, 0d), new Tuple<>(0d, 0d),new Tuple<>(0d, 0d), startParams.getZondMass()));
+
+        double radiusOfAtmosphere = startParams.getAtmosphereRadius();
+        double g = startParams.getG();
+        double airK = startParams.getAirK();
+        double dt = startParams.getdT();
+
+
+        while(dr > 0 && dr < 1e15) {
             State state = new State(trajectory.get(trajectory.size() - 1));
-            state.setForceIn(startPid.countForces(state.getCoordinates().getX(), Math.abs(state.getCoordinates().getY() - radiusOfPlanet)));
-            double distance = Math.sqrt(Math.pow(startState.getCoordinates().getY(), 2) + Math.pow(startState.getCoordinates().getX(), 2));
+            state.setForceIn(startPid.countForces(state.getCoordinates().getX(), Math.abs(state.getCoordinates().getY() - startParams.getPlanetRadius())));
+            double distance = Math.sqrt(Math.pow(startParams.getY(), 2) + Math.pow(startParams.getX(), 2));
             double fOutX;
             double fOutY;
+
+
             if(distance < radiusOfAtmosphere) {
                 fOutX = g * state.getM() - airK * state.getVelocity().getX() * state.getVelocity().getX();
                 fOutY = g * state.getM() - airK * state.getVelocity().getY() * state.getVelocity().getY();
@@ -44,10 +52,13 @@ public class Trajectory {
             state.setForceOut(new Tuple<>(fOutX, fOutY));
             state.setT(state.getT() + dt);
 
-            dr = Math.sqrt(Math.pow(startState.getCoordinates().getY() - radiusOfPlanet, 2) + Math.pow(startState.getCoordinates().getX(), 2)); // типа приземляюсь в точку (0, R)
+            dr = Math.sqrt(Math.pow(state.getCoordinates().getY() - startParams.getPlanetRadius(), 2) + Math.pow(state.getCoordinates().getX(), 2)); // типа приземляюсь в точку (0, R)
             trajectory.add(state);
 
         }
     }
 
+    public List<State> getTrajectory() {
+        return trajectory;
+    }
 }

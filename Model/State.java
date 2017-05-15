@@ -11,19 +11,19 @@ public class State {
     double m; //если мы всё же запилим с изменяющейся массой
 
     public State() {
-
     }
 
     public State(State other) {
-        this(other.getCoordinates(), other.getVelocity(), other.getAcceleration(), other.getForceOut(), other.getForceIn());
+        this(other.getCoordinates(), other.getVelocity(), other.getAcceleration(), other.getForceOut(), other.getForceIn(), other.getM());
     }
 
-    public State(Tuple<Double, Double> coordinates, Tuple<Double, Double> velocity, Tuple<Double, Double> acceleration, Tuple<Double, Double> forceOut, Tuple<Double, Double> forceIn) {
+    public State(Tuple<Double, Double> coordinates, Tuple<Double, Double> velocity, Tuple<Double, Double> acceleration, Tuple<Double, Double> forceOut, Tuple<Double, Double> forceIn, double m) {
         this.coordinates = coordinates;
         this.velocity = velocity;
         this.acceleration = acceleration;
         this.forceOut = forceOut;
         this.forceIn = forceIn;
+        this.m = m;
     }
 
     public void setCoordinates(Tuple<Double, Double> coordinates) {

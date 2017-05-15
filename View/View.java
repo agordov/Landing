@@ -92,7 +92,6 @@ public class View extends Application {
         ObservableList<XYChart.Data<Number, Number>> datas = FXCollections.observableArrayList();
         for(int i = 0; i < values.get(0).size();i ++){
             datas.add(new XYChart.Data<>(values.get(0).get(i), values.get(1).get(i)));
-
         }
         series.setData(datas);
         numberLineChart.getStyleClass().add("chart");

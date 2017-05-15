@@ -1,13 +1,14 @@
 package Landing.Control;
 
-import Landing.Model.MoveParams;
-import Landing.Model.PIDController;
+import Landing.Model.*;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import Landing.View.View;
+import javafx.scene.layout.StackPane;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
@@ -32,7 +33,15 @@ public class Controller {
         try{
             MoveParams moveParams = new MoveParams();
             PIDController pidController = new PIDController(moveParams.getEngineThrustX(), moveParams.getEngineThrustY(), 0.1);
-            
+            Trajectory trajectory = new Trajectory(pidController, moveParams);
+            List<List<Double>> values = new ArrayList<>();
+            List<State> trajectoryStates = trajectory.getTrajectory();
+            for (State e : trajectoryStates) {
+                List<Double> xy = new ArrayList<>();
+                xy.add(e.getCoordinates().getX());
+                xy.add(e.getCoordinates().getY());
+                values.add(xy);
+            }
             LineChart<Number, Number> numberLineChart = View.addChart(values);
             //borderPane.setCenter(numberLineChart);
             //listOfConstantFields.get(0).setText(String.valueOf(calcTrajectory.calculatePathLength()));

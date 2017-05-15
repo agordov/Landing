@@ -29,6 +29,8 @@ public class MoveParams {
     private static final double MIN_ATMOSPHERERADIUS = 2e4;
 
     private static final double G = 6.6e-11;
+    private static final double dT = 0.1;
+    private static final double airK = 0.8;
 
     private double vx = generationOfParams(MAX_VX, MIN_VX);
     private double vy = generationOfParams(MAX_VY, MIN_VY);
@@ -100,4 +102,11 @@ public class MoveParams {
         return engineThrustX;
     }
 
+    public double getdT() {
+        return dT;
+    }
+
+    public double getAirK() {
+        return airK;
+    }
 }

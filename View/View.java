@@ -16,7 +16,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import landingProbe.controller.Controller;
+import Landing.Control.Controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -101,7 +101,7 @@ public class View extends Application {
     }
     public static BorderPane addParametersPane(BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
         List<String> parameters = new ArrayList<>();
-        Collections.addAll(parameters, "PosX", "PosY","PowerX", "PowerY", "MassProbe", "Radius","AtmosphereRadius", "MassPlanet");
+        Collections.addAll(parameters, "PosX", "PosY","PowerX", "PowerY", "Probe Mass", "Radius","Atmosphere Radius", "Planet Mass");
 
         BorderPane leftPane = new BorderPane();
 

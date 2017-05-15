@@ -71,7 +71,7 @@ public class Controller {
         }
     }
     public static void actionRandomButton(BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
-        BorderPane parametersPane = landingProbe.view.View.addParametersPane(borderPane, listOfParamFields, listOfValuesFields);
+        BorderPane parametersPane = Landing.View.View.addParametersPane(borderPane, borderPane, listOfParamFields, listOfValuesFields);
         borderPane.setLeft(parametersPane);
 
     }

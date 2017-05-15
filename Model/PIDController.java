@@ -1,7 +1,5 @@
 package Landing.Model;
 
-import java.util.List;
-
 public class PIDController {
 
     private double p;
@@ -11,8 +9,6 @@ public class PIDController {
     private double dT;
     private double maxFx;
     private double maxFy;
-    private double previousX;
-    private double previousY;
     private static final double DEFAULT_P = 1;
     private static final double DEFAULT_I = 1;
     private static final double DEFAULT_D = 1;
@@ -29,16 +25,12 @@ public class PIDController {
         this.maxFx = maxFx;
         this.maxFy = maxFy;
         this.dT = dT;
-        this.previousX = 0;
-        this.previousY = 0;
     }
 
     public Tuple<Double, Double> countForces(double dX, double dY) {
-        double Fx;
-        double Fy;
         integrate(dX, dY);
-        Fx = p + i * integral.getX() + d * derivative(dX);
-        Fy = p + i * integral.getY() + d * derivative(dY);
+        double Fx = p + i * integral.getX() + d * derivative(dX);
+        double Fy = p + i * integral.getY() + d * derivative(dY);
         return new Tuple<>(Fx > maxFx ? maxFx : Fx, Fy > maxFy ? maxFy : Fy);
     }
 
@@ -46,7 +38,7 @@ public class PIDController {
         return dV/dT;
     }
 
-    public void integrate(double dX, double dY) {
+    private void integrate(double dX, double dY) {
         integral.setX(integral.getX() + dX * dT);
         integral.setY(integral.getY() + dY * dT);
     }
@@ -74,17 +66,4 @@ public class PIDController {
     public void setD(double d) {
         this.d = d;
     }
-
-    public double getIntegral() {
-        return integral.getX();
-    }
-//    public static void main(String[] args) {
-//        double dt = 0.1;
-//        PIDController pidController = new PIDController(1, 1, 1, 1, 1, dt);
-//        System.out.println(pidController.getClass().getDeclaredFields()[0]);
-//        for(int x = 0; x <= 100 ; x++) {
-//            pidController.integrate(x, x);
-//        }
-//        System.out.println(pidController.getIntegral());
-//    }
 }

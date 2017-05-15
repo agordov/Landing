@@ -32,21 +32,21 @@ public class MoveParams {
     private static final double dT = 0.1;
     private static final double airK = 0.8;
 
-    private double vx = generationOfParams(MAX_VX, MIN_VX);
-    private double vy = generationOfParams(MAX_VY, MIN_VY);
+    private double vx;
+    private double vy;
 
-    private double zondMass = generationOfParams(MAX_ZONDMASS, MIN_ZONDMASS);
-    private double planetMass = generationOfParams(MAX_PLANETMASS, MIN_PLANETMASS);
+    private double zondMass;
+    private double planetMass;
 
-    private double planetRadius = generationOfParams(MAX_PLANETRADIUS, MIN_PLANETRADIUS);
-    private double atmosphereRadius = planetRadius + generationOfParams(MAX_ATMOSPHERERADIUS, MIN_ATMOSPHERERADIUS);
+    private double planetRadius;
+    private double atmosphereRadius;
 
-    private double x = generationOfParams(MAX_X, MIN_X);
-    private double y = generationOfY(x, planetRadius);
+    private double x;
+    private double y;
 
-    private double g = G * planetMass / Math.pow(planetRadius, 2);
-    private double engineThrustY = zondMass * g * 4;
-    private double engineThrustX = zondMass * g * 3;
+    private double g;
+    private double engineThrustY;
+    private double engineThrustX;
 
     private static double generationOfParams(double maxValue, double minValue) {
         return minValue + Math.random() * (maxValue - minValue);
@@ -60,6 +60,38 @@ public class MoveParams {
         }
 
         return y;
+    }
+
+    public MoveParams() {
+        this.vx = generationOfParams(MAX_VX, MIN_VX);
+        this.vy = generationOfParams(MAX_VY, MIN_VY);
+        this.zondMass = generationOfParams(MAX_ZONDMASS, MIN_ZONDMASS);
+        this.planetMass = generationOfParams(MAX_PLANETMASS, MIN_PLANETMASS);
+        this.planetRadius = generationOfParams(MAX_PLANETRADIUS, MIN_PLANETRADIUS);
+        this.atmosphereRadius = planetRadius + generationOfParams(MAX_ATMOSPHERERADIUS, MIN_ATMOSPHERERADIUS);
+        this.x = generationOfParams(MAX_X, MIN_X);
+        this.y = generationOfY(x, planetRadius);
+        this.g = G * planetMass / Math.pow(planetRadius, 2);
+        this.engineThrustY = zondMass * g * 4;
+        this.engineThrustX = zondMass * g * 3;
+    }
+
+    public MoveParams(double vx, double vy, double zondMass, double planetMass, double planetRadius, double atmosphereRadius, double x, double y, double engineThrustX, double engineThrustY) {
+        this.vx = vx;
+        this.vy = vy;
+        this.zondMass = zondMass;
+        this.planetMass = planetMass;
+        this.planetRadius = planetRadius;
+        this.atmosphereRadius = atmosphereRadius;
+        this.x = x;
+        this.y = y;
+        this.g = g;
+        this.engineThrustY = engineThrustY;
+        this.engineThrustX = engineThrustX;
+    }
+
+    public MoveParams(double vx, double vy, double zondMass, double planetMass, double planetRadius, double atmosphereRadius, double x, double y) {
+
     }
 
     public double getX() {

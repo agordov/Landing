@@ -2,7 +2,6 @@ package Landing.Control;
 
 import Landing.Model.MoveParams;
 import Landing.Model.PIDController;
-import Landing.Model.SystemParams;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -33,7 +32,6 @@ public class Controller {
         try{
             MoveParams moveParams = new MoveParams();
             PIDController pidController = new PIDController(moveParams.getEngineThrustX(), moveParams.getEngineThrustY(), 0.1);
-            SystemParams systemParams = new SystemParams(moveParams);
             
             LineChart<Number, Number> numberLineChart = View.addChart(values);
             //borderPane.setCenter(numberLineChart);

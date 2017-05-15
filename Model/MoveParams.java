@@ -5,16 +5,16 @@ import java.lang.Math;
 public class MoveParams {
 
     private static final double MAX_X = 1e8;
-    private static final double MIN_X = 0;
+    private static final double MIN_X = -1e8;
 
     private static final double MAX_Y = 1e8;
-    private static final double MIN_Y = 0;
+    private static final double MIN_Y = -1e8;
 
     private static final double MAX_VX = 1e6;
-    private static final double MIN_VX = 0;
+    private static final double MIN_VX = -1e6;
 
     private static final double MAX_VY = 1e6;
-    private static final double MIN_VY = 0;
+    private static final double MIN_VY = -1e6;
 
     private static final double MAX_ZONDMASS = 5000;
     private static final double MIN_ZONDMASS = 60;
@@ -28,9 +28,6 @@ public class MoveParams {
     private static final double MAX_ATMOSPHERERADIUS = 1e5;
     private static final double MIN_ATMOSPHERERADIUS = 2e4;
 
-    private static final double MAX_ENGINETHRUSTX = 50000;
-    private static final double MIN_ENGINETHRUSTX = 10000;
-
     private static final double G = 6.6e-11;
 
     private double vx = generationOfParams(MAX_VX, MIN_VX);
@@ -42,15 +39,25 @@ public class MoveParams {
     private double planetRadius = generationOfParams(MAX_PLANETRADIUS, MIN_PLANETRADIUS);
     private double atmosphereRadius = planetRadius + generationOfParams(MAX_ATMOSPHERERADIUS, MIN_ATMOSPHERERADIUS);
 
-    private double x = planetRadius + generationOfParams(MAX_X, MIN_X);
-    private double y = planetRadius + generationOfParams(MAX_Y, MIN_Y);
+    private double x = generationOfParams(MAX_X, MIN_X);
+    private double y = generationOfY(x, planetRadius);
 
     private double g = G * planetMass / Math.pow(planetRadius, 2);
-    private double engineThrustY = zondMass * g;
-    private double engineThrustX = generationOfParams(MAX_ENGINETHRUSTX, MIN_ENGINETHRUSTX);
+    private double engineThrustY = zondMass * g * 4;
+    private double engineThrustX = zondMass * g * 3;
 
     private static double generationOfParams(double maxValue, double minValue) {
         return minValue + Math.random() * (maxValue - minValue);
+    }
+
+    private static double generationOfY(double x, double planetRadius) {
+        double y = generationOfParams(MAX_Y,MIN_Y);
+
+        while (Math.sqrt(Math.pow(x,2) + Math.pow(y,2)) > planetRadius) {
+            y = generationOfParams(MAX_Y,MIN_Y);
+        }
+
+        return y;
     }
 
     public double getX() {
@@ -92,4 +99,5 @@ public class MoveParams {
     public double getEngineThrustX() {
         return engineThrustX;
     }
+
 }

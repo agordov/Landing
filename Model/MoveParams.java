@@ -62,6 +62,10 @@ public class MoveParams {
         return y;
     }
 
+    public double getG() {
+        return g;
+    }
+
     public MoveParams() {
         this.vx = generationOfParams(MAX_VX, MIN_VX);
         this.vy = generationOfParams(MAX_VY, MIN_VY);

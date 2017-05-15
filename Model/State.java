@@ -10,6 +10,9 @@ public class State {
     double t;
     double m; //если мы всё же запилим с изменяющейся массой
 
+    public State() {
+
+    }
 
     public State(State other) {
         this(other.getCoordinates(), other.getVelocity(), other.getAcceleration(), other.getForceOut(), other.getForceIn());
@@ -41,6 +44,10 @@ public class State {
 
     public void setForceIn(Tuple<Double, Double> forceIn) {
         this.forceIn = forceIn;
+    }
+
+    public void setM(double m) {
+        this.m = m;
     }
 
     public Tuple<Double, Double> getCoordinates() {

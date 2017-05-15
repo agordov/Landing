@@ -115,10 +115,10 @@ public class View extends Application {
         vBox.getStyleClass().add("parametersPane");
 
 
-        leftPane.setBottom(addBtnPane(mainPane, listOfParamFields, listOfValuesFields));
+        leftPane.setBottom(addBtnPane(mainPane,borderPane,  listOfParamFields, listOfValuesFields));
         return leftPane;
     }
-    private static BorderPane addBtnPane(BorderPane mainPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
+    private static BorderPane addBtnPane(BorderPane mainPane,BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
         BorderPane btnPane = new BorderPane();
         btnPane.getStyleClass().add("btnPane");
 
@@ -127,7 +127,7 @@ public class View extends Application {
         calculateBut.setOnAction(event -> Landing.Control.Controller.actionCalculateButton(mainPane, listOfValuesFields));
 
         Button randomBut = new Button("Random parameters");
-        randomBut.setOnAction(event -> Landing.Control.Controller.actionRandomButton(mainPane, listOfParamFields, listOfValuesFields));
+        randomBut.setOnAction(event -> Landing.Control.Controller.actionRandomButton(borderPane, listOfParamFields, listOfValuesFields));
 
         btnPane.setLeft(randomBut);
         btnPane.setRight(calculateBut);

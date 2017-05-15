@@ -33,10 +33,13 @@ public class View extends Application {
         List<TextField> listOfValuesFields = new ArrayList<>();
         List<TextField> listOfParamFields = new ArrayList<>();
         BorderPane borderPane = new BorderPane();
+        BorderPane mainPane = addMainPane();
+        borderPane.setCenter(mainPane);
 
-        BorderPane leftPane = addParametersPane(borderPane, listOfParamFields, listOfValuesFields);
+        BorderPane leftPane = addParametersPane(mainPane, borderPane, listOfParamFields, listOfValuesFields);
         borderPane.setLeft(leftPane);
-        borderPane.setCenter(addMainPane());
+
+
         Scene scene = new Scene(borderPane, 1000, 600);
         scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
         primaryStage.setScene(scene);
@@ -46,7 +49,7 @@ public class View extends Application {
     private BorderPane addMainPane(){
         BorderPane mainPane = new BorderPane();
         mainPane.getStyleClass().add("mainPane");
-        mainPane.setCenter(addChart(addCheckedValues()));
+        mainPane.setCenter(addChart(addCheckedValues(), "example"));
         mainPane.setBottom(addFlowPane());
         return mainPane;
     }
@@ -81,13 +84,13 @@ public class View extends Application {
         graphButton.setOnAction(event -> Controller.actionInfoButton());
         return graphButton;
     }
-    public static LineChart<Number, Number> addChart(List<List<Double>> values){
+    public static LineChart<Number, Number> addChart(List<List<Double>> values, String chartTitle){
         NumberAxis x = new NumberAxis();
         NumberAxis y = new NumberAxis();
         LineChart<Number, Number> numberLineChart = new LineChart<>(x,y);
         numberLineChart.setCreateSymbols(false);
         numberLineChart.setLegendVisible(false);
-        numberLineChart.setTitle("Angular Motion: trajectory");
+        numberLineChart.setTitle(chartTitle);
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
         ObservableList<XYChart.Data<Number, Number>> datas = FXCollections.observableArrayList();
         for(int i = 0; i < values.get(0).size();i ++){
@@ -98,13 +101,13 @@ public class View extends Application {
         numberLineChart.getData().add(series);
         return numberLineChart;
     }
-    public static BorderPane addParametersPane(BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
+    public static BorderPane addParametersPane(BorderPane mainPane,BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
         List<String> parameters = new ArrayList<>();
         Collections.addAll(parameters, "PosX", "PosY","PowerX", "PowerY", "Probe Mass", "Radius","Atmosphere Radius", "Planet Mass");
 
         BorderPane leftPane = new BorderPane();
 
-        HBox buttonBox = addBtnBox(borderPane, listOfParamFields, listOfValuesFields);
+        HBox buttonBox = addBtnBox(mainPane, borderPane, listOfParamFields, listOfValuesFields);
         leftPane.setTop(buttonBox);
 
         VBox vBox = addVBox(parameters, listOfValuesFields);
@@ -112,25 +115,29 @@ public class View extends Application {
         vBox.getStyleClass().add("parametersPane");
 
 
-        leftPane.setBottom(addCalcPane());
+        leftPane.setBottom(addBtnPane(mainPane, listOfParamFields, listOfValuesFields));
         return leftPane;
     }
-    private static BorderPane addCalcPane(){
+    private static BorderPane addBtnPane(BorderPane mainPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
         BorderPane btnPane = new BorderPane();
+        btnPane.getStyleClass().add("btnPane");
+
 
         Button calculateBut = new Button("Calculate");
-        calculateBut.getStyleClass().add("calcButton");
+        calculateBut.setOnAction(event -> Landing.Control.Controller.actionCalculateButton(mainPane, listOfValuesFields));
 
-        calculateBut.setOnAction(event -> Controller.actionCalculateButton());
-        BorderPane.setMargin(calculateBut, new Insets(10));
+        Button randomBut = new Button("Random parameters");
+        randomBut.setOnAction(event -> Landing.Control.Controller.actionRandomButton(mainPane, listOfParamFields, listOfValuesFields));
+
+        btnPane.setLeft(randomBut);
         btnPane.setRight(calculateBut);
         return btnPane;
     }
-    public static BorderPane addValuesPane(BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
+    public static BorderPane addValuesPane(BorderPane mainPane,BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
         List<String> parameters = new ArrayList<>();
         Collections.addAll(parameters, "Time", "MaxSpeed","LandingPositionX", "LandingPositionY");
         BorderPane leftPane = new BorderPane();
-        HBox buttonBox = addBtnBox(borderPane, listOfParamFields, listOfValuesFields);
+        HBox buttonBox = addBtnBox(mainPane, borderPane, listOfParamFields, listOfValuesFields);
         leftPane.setTop(buttonBox);
 
         VBox vBox = addVBox(parameters, listOfValuesFields);
@@ -176,15 +183,15 @@ public class View extends Application {
         borderPane.setCenter(label);
         return borderPane;
     }
-    private static HBox addBtnBox(BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
+    private static HBox addBtnBox(BorderPane mainPane, BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
         HBox hBox = new HBox();
         hBox.getStyleClass().add("btnBox");
         Button btn1 = new Button("Parameters");
         Button btn2 = new Button("Values");
         btn1.prefWidthProperty().bind(hBox.widthProperty().multiply(0.5));
         btn2.prefWidthProperty().bind(hBox.widthProperty().multiply(0.5));
-        btn1.setOnAction(event -> Controller.actionParametersButton(borderPane, listOfParamFields, listOfValuesFields));
-        btn2.setOnAction(event -> Controller.actionValuesButton(borderPane, listOfParamFields, listOfValuesFields));
+        btn1.setOnAction(event -> Controller.actionParametersButton(mainPane, borderPane, listOfParamFields, listOfValuesFields));
+        btn2.setOnAction(event -> Controller.actionValuesButton(mainPane, borderPane, listOfParamFields, listOfValuesFields));
         hBox.getChildren().addAll(btn1,btn2);
         return hBox;
     }

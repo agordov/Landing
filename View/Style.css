@@ -43,7 +43,7 @@
     -fx-border-width:2px 2px 2px 2px ;
     -fx-border-color: #777779;
     -fx-background-color: #404042;
-    -fx-text-fill: #BDDA1C;
+    -fx-text-fill: white;
 }
 .btnBox{
     //-fx-border-width:0px 3px 0px 0px ;
@@ -67,4 +67,7 @@
 .graphButtons{
     -fx-border-width:3px 0px 0px 0px ;
     -fx-border-color: #777779;
+}
+.btnPane{
+    -fx-padding:10px;
 }

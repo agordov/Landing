@@ -1,12 +1,14 @@
 package Landing.Control;
 
-import Landing.Model.*;
+import Landing.Model.MoveParams;
+import Landing.Model.PIDController;
+import Landing.Model.State;
+import Landing.Model.Trajectory;
+import Landing.View.View;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import Landing.View.View;
-import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,7 @@ public class Controller {
         alert.setContentText("This program calculates the trajectory of the object's motion according to speed and coordinates.");
         alert.showAndWait();
     }
-    public static void actionCalculateButton(){
+    public static void actionCalculateButton(BorderPane mainPane, List<TextField> listOfValuesFields){
         try{
             MoveParams moveParams = new MoveParams();
             PIDController pidController = new PIDController(moveParams.getEngineThrustX(), moveParams.getEngineThrustY(), 0.1);
@@ -42,11 +44,11 @@ public class Controller {
                 xy.add(e.getCoordinates().getY());
                 values.add(xy);
             }
-            LineChart<Number, Number> numberLineChart = View.addChart(values);
-            //borderPane.setCenter(numberLineChart);
-            //listOfConstantFields.get(0).setText(String.valueOf(calcTrajectory.calculatePathLength()));
-            //listOfConstantFields.get(1).setText(String.valueOf(calcTrajectory.fallingTime()));
-            //listOfConstantFields.get(2).setText(String.valueOf(calcTrajectory.calculateMaxHeight()));
+            LineChart<Number, Number> numberLineChart = View.addChart(values, "Landing");
+            mainPane.setCenter(numberLineChart);
+            //listOfValuesFields.get(0).setText(String.valueOf(calcTrajectory.calculatePathLength()));
+            //listOfValuesFields.get(1).setText(String.valueOf(calcTrajectory.fallingTime()));
+            //listOfValuesFields.get(2).setText(String.valueOf(calcTrajectory.calculateMaxHeight()));
 
         }catch (IllegalArgumentException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -67,13 +69,18 @@ public class Controller {
 
         }
     }
-    public static void actionParametersButton(BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
-        BorderPane parametersPane = View.addParametersPane(borderPane, listOfParamFields, listOfValuesFields);
+    public static void actionRandomButton(BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
+        BorderPane parametersPane = landingProbe.view.View.addParametersPane(borderPane, listOfParamFields, listOfValuesFields);
         borderPane.setLeft(parametersPane);
 
     }
-    public static void actionValuesButton(BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
-        BorderPane valuesPane = View.addValuesPane(borderPane, listOfParamFields, listOfValuesFields);
+    public static void actionParametersButton(BorderPane mainPane,BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
+        BorderPane parametersPane = View.addParametersPane(mainPane, borderPane, listOfParamFields, listOfValuesFields);
+        borderPane.setLeft(parametersPane);
+
+    }
+    public static void actionValuesButton(BorderPane mainPane, BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
+        BorderPane valuesPane = View.addValuesPane(mainPane, borderPane, listOfParamFields, listOfValuesFields);
         borderPane.setLeft(valuesPane);
     }
 }

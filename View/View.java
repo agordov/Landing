@@ -1,5 +1,6 @@
 package Landing.View;
 
+import Landing.Control.Controller;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,6 +10,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -16,7 +18,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import Landing.Control.Controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,8 +33,9 @@ public class View extends Application {
     public void start(Stage primaryStage) {
         List<TextField> listOfValuesFields = new ArrayList<>();
         List<TextField> listOfParamFields = new ArrayList<>();
+        List<ComboBox<String>> listOfComboBoxes= new ArrayList<>();
         BorderPane borderPane = new BorderPane();
-        BorderPane mainPane = addMainPane();
+        BorderPane mainPane = addMainPane(listOfComboBoxes);
         borderPane.setCenter(mainPane);
 
         BorderPane leftPane = addParametersPane(mainPane, borderPane, listOfParamFields, listOfValuesFields);
@@ -46,12 +48,45 @@ public class View extends Application {
         primaryStage.setTitle("Drone landing");
         primaryStage.show();
     }
-    private BorderPane addMainPane(){
+    private BorderPane addMainPane(List<ComboBox<String>> listOfComboBoxes){
         BorderPane mainPane = new BorderPane();
         mainPane.getStyleClass().add("mainPane");
         mainPane.setCenter(addChart(addCheckedValues(), "example"));
-        mainPane.setBottom(addFlowPane());
+        mainPane.setBottom(addBottomPane(mainPane, listOfComboBoxes));
         return mainPane;
+    }
+    private FlowPane addBottomPane(BorderPane mainPane, List<ComboBox<String>> listOfComboBoxes){
+        FlowPane flowPane = new FlowPane();
+        HBox firstBox = addchoiceBox("X axis: ", "X", listOfComboBoxes);
+        HBox secondBox = addchoiceBox("Y axis: ", "Y", listOfComboBoxes);
+        Button buildButton = new Button("Build");
+
+
+        buildButton.setOnAction(event -> Controller.actionBuildButton(mainPane, listOfComboBoxes));
+
+        FlowPane.setMargin(firstBox, new Insets(5,10,5,10));
+        FlowPane.setMargin(secondBox, new Insets(5,10,5,10));
+        FlowPane.setMargin(buildButton, new Insets(5,10,5,10));
+
+        flowPane.getChildren().addAll(firstBox, secondBox, buildButton);
+        flowPane.getStyleClass().add("bottomPane");
+        return flowPane;
+    }
+    private HBox addchoiceBox(String label, String initValue, List<ComboBox<String>> listOfComboBoxes){
+        HBox hBox = new HBox();
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.getItems().addAll(
+                "X",
+                "Y",
+                "Vx",
+                "Vy",
+                "Power",
+                "Time"
+        );
+        listOfComboBoxes.add(comboBox);
+        comboBox.setValue(initValue);
+        hBox.getChildren().addAll(addLabelPane(label), comboBox);
+        return hBox;
     }
     private List<List<Double>> addCheckedValues(){
         List<List<Double>> values = new ArrayList<>();
@@ -65,20 +100,7 @@ public class View extends Application {
         values.add(yValues);
         return values;
     }
-    private FlowPane addFlowPane(){
-        FlowPane flowPane = new FlowPane();
 
-        Button velBtn = addGraphButton("graph V(t)");
-        Button powerBtn = addGraphButton("graph F(t)");
-        Button controlBtn = addGraphButton("graph control(t)");
-        flowPane.setPadding(new Insets(5));
-        FlowPane.setMargin(velBtn, new Insets(5,10,5,10));
-        FlowPane.setMargin(powerBtn, new Insets(5,10,5,10));
-        FlowPane.setMargin(controlBtn, new Insets(5,10,5,10));
-        flowPane.getChildren().addAll(velBtn, powerBtn, controlBtn);
-        flowPane.getStyleClass().add("graphButtons");
-        return flowPane;
-    }
     private Button addGraphButton(String textButton){
         Button graphButton = new Button(textButton);
         graphButton.setOnAction(event -> Controller.actionInfoButton());

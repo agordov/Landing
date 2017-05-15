@@ -7,6 +7,7 @@ import Landing.Model.Trajectory;
 import Landing.View.View;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
@@ -82,5 +83,8 @@ public class Controller {
     public static void actionValuesButton(BorderPane mainPane, BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
         BorderPane valuesPane = View.addValuesPane(mainPane, borderPane, listOfParamFields, listOfValuesFields);
         borderPane.setLeft(valuesPane);
+    }
+    public static void actionBuildButton(BorderPane mainPane, List<ComboBox<String>> listOfComboBoxes){
+
     }
 }

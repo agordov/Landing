@@ -30,12 +30,9 @@
     -fx-text-fill: white;
 }
 .button:hover{
-    -fx-border-radius: 5px;
-    -fx-background-color: white;
-    -fx-text-fill: #404042;
+    -fx-text-fill: #BDDA1C;
 }
 .button:pressed{
-    -fx-border-radius: 5px;
     -fx-background-color: #BDDA1C;
     -fx-text-fill: #404042;
 }
@@ -64,10 +61,32 @@
     -fx-border-width:15px 3px 0px 0px ;
     -fx-border-color: #404042;
 }
-.graphButtons{
+.bottomPane{
     -fx-border-width:3px 0px 0px 0px ;
     -fx-border-color: #777779;
 }
 .btnPane{
     -fx-padding:10px;
+}
+.combo-box {
+-fx-padding:1px;
+    -fx-background-color: #404042;
+    -fx-border-color:#BDDA1C;
+    -fx-border-radius: 5px;
+
+}
+.list-cell {
+    -fx-background-color: #404042;
+    -fx-text-fill: white;
+    //-fx-border-color:#BDDA1C;
+    //-fx-border-radius: 5px;
+}
+.list-cell:hover {
+    //-fx-background-color: white;
+    -fx-text-fill:#BDDA1C;
+    //-fx-border-radius: 5px;
+}
+.list-cell:pressed{
+    -fx-background-color: white;
+    -fx-text-fill:#404042;
 }

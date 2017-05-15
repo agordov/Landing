@@ -1,9 +1,6 @@
 package Landing.Control;
 
-import Landing.Model.MoveParams;
-import Landing.Model.PIDController;
-import Landing.Model.State;
-import Landing.Model.Trajectory;
+import Landing.Model.*;
 import Landing.View.View;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Alert;
@@ -15,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
+
+    private static List<State> stateList = new ArrayList<>(0);
 
     private static void clearTextFields(List<TextField> listOfConstantFields, List<TextField> listOfFields){
         listOfFields.get(0).clear();
@@ -38,8 +37,8 @@ public class Controller {
             PIDController pidController = new PIDController(moveParams.getEngineThrustX(), moveParams.getEngineThrustY(), 0.1);
             Trajectory trajectory = new Trajectory(pidController, moveParams);
             List<List<Double>> values = new ArrayList<>();
-            List<State> trajectoryStates = trajectory.getTrajectory();
-            for (State e : trajectoryStates) {
+            stateList = trajectory.getTrajectory();
+            for (State e : stateList) {
                 List<Double> xy = new ArrayList<>();
                 xy.add(e.getCoordinates().getX());
                 xy.add(e.getCoordinates().getY());
@@ -84,7 +83,50 @@ public class Controller {
         BorderPane valuesPane = View.addValuesPane(mainPane, borderPane, listOfParamFields, listOfValuesFields);
         borderPane.setLeft(valuesPane);
     }
-    public static void actionBuildButton(BorderPane mainPane, List<ComboBox<String>> listOfComboBoxes){
 
+    private static int getComboBoxValueId(ComboBox<String> comboBox) {
+        int i = 0;
+        while (!comboBox.getValue().equals(comboBox.getItems().get(i))) {
+            i++;
+        }
+        return i;
+    }
+
+    public static void actionBuildButton(BorderPane mainPane, List<ComboBox<String>> listOfComboBoxes){
+        int xAxisComboBoxId = getComboBoxValueId(listOfComboBoxes.get(1));
+        int yAxisComboBoxId = getComboBoxValueId(listOfComboBoxes.get(0));
+        List<List<Double>> values = new ArrayList<>();
+        for (State e : stateList) {
+            List<Double> xy = new ArrayList<>();
+            xy.add(getFieldValue(e, xAxisComboBoxId));
+            xy.add(getFieldValue(e, yAxisComboBoxId));
+            values.add(xy);
+        }
+        LineChart<Number, Number> numberLineChart = View.addChart(values, String.format("%s(%s)", listOfComboBoxes.get(0).getValue(), listOfComboBoxes.get(1).getValue()));
+        mainPane.setCenter(numberLineChart);
+    }
+
+    private static double getFieldValue(State state, int fieldId) {
+        double value;
+        switch (fieldId) {
+            case 0:
+                value = state.getCoordinates().getX();
+                break;
+            case 1:
+                value = state.getCoordinates().getY();
+                break;
+            case 2:
+                value = state.getVelocity().getX();
+                break;
+            case 3:
+                value = state.getVelocity().getY();
+                break;
+            case 4:
+                value = state.getForceOut().getX();
+                break;
+            default:
+                value = state.getT();
+        }
+        return value;
     }
 }

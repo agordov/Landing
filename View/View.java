@@ -57,8 +57,8 @@ public class View extends Application {
     }
     private FlowPane addBottomPane(BorderPane mainPane, List<ComboBox<String>> listOfComboBoxes){
         FlowPane flowPane = new FlowPane();
-        HBox firstBox = addchoiceBox("X axis: ", "X", listOfComboBoxes);
-        HBox secondBox = addchoiceBox("Y axis: ", "Y", listOfComboBoxes);
+        HBox firstBox = addChoiceBox("X axis: ", "X", listOfComboBoxes);
+        HBox secondBox = addChoiceBox("Y axis: ", "Y", listOfComboBoxes);
         Button buildButton = new Button("Build");
 
 
@@ -72,7 +72,7 @@ public class View extends Application {
         flowPane.getStyleClass().add("bottomPane");
         return flowPane;
     }
-    private HBox addchoiceBox(String label, String initValue, List<ComboBox<String>> listOfComboBoxes){
+    private HBox addChoiceBox(String label, String initValue, List<ComboBox<String>> listOfComboBoxes){
         HBox hBox = new HBox();
         ComboBox<String> comboBox = new ComboBox<>();
         comboBox.getItems().addAll(
@@ -115,8 +115,8 @@ public class View extends Application {
         numberLineChart.setTitle(chartTitle);
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
         ObservableList<XYChart.Data<Number, Number>> datas = FXCollections.observableArrayList();
-        for(int i = 0; i < values.get(0).size();i ++){
-            datas.add(new XYChart.Data<>(values.get(0).get(i), values.get(1).get(i)));
+        for(int i = 0; i < values.size();i++){
+            datas.add(new XYChart.Data<>(values.get(i).get(1), values.get(i).get(0)));
         }
         series.setData(datas);
         numberLineChart.getStyleClass().add("chart");

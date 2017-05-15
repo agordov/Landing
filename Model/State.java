@@ -4,9 +4,9 @@ public class State {
 
     private Tuple<Double, Double> coordinates;
     private Tuple<Double, Double> velocity;
-    private Tuple<Double, Double> acceleration;
     private Tuple<Double, Double> forceOut;
     private Tuple<Double, Double> forceIn;
+    private Tuple<Double, Double> acceleration;
     double t;
     double m; //если мы всё же запилим с изменяющейся массой
 

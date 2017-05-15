@@ -53,7 +53,7 @@ public class MoveParams {
     private static double generationOfY(double x, double planetRadius) {
         double y = generationOfParams(MAX_Y,MIN_Y);
 
-        while (Math.sqrt(Math.pow(x,2) + Math.pow(y,2)) > planetRadius) {
+        while (Math.sqrt(Math.pow(x,2) + Math.pow(y,2)) < planetRadius) {
             y = generationOfParams(MAX_Y,MIN_Y);
         }
 

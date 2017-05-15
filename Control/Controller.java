@@ -1,5 +1,8 @@
 package Landing.Control;
 
+import Landing.Model.MoveParams;
+import Landing.Model.PIDController;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -27,7 +30,10 @@ public class Controller {
     }
     public static void actionCalculateButton(){
         try{
-            //LineChart<Number, Number> numberLineChart = View.addChart(values);
+            MoveParams moveParams = new MoveParams();
+            PIDController pidController = new PIDController(moveParams.getEngineThrustX(), moveParams.getEngineThrustY(), 0.1);
+            
+            LineChart<Number, Number> numberLineChart = View.addChart(values);
             //borderPane.setCenter(numberLineChart);
             //listOfConstantFields.get(0).setText(String.valueOf(calcTrajectory.calculatePathLength()));
             //listOfConstantFields.get(1).setText(String.valueOf(calcTrajectory.fallingTime()));

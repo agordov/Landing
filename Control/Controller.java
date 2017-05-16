@@ -93,13 +93,20 @@ public class Controller {
         listOfParamFields.get(8).setText(String.valueOf(moveParams.getEngineThrustX()));
         listOfParamFields.get(9).setText(String.valueOf(moveParams.getEngineThrustY()));
     }
-    public static void actionParametersButton(BorderPane mainPane,BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
-        BorderPane parametersPane = View.addParametersPane(mainPane, borderPane, listOfParamFields, listOfValuesFields);
-        borderPane.setLeft(parametersPane);
 
+    public static void actionParametersButton(BorderPane mainPane,
+                                              BorderPane borderPane,
+                                              List<TextField> paramFields,
+                                              List<TextField> valuesFields) {
+        BorderPane parametersPane = View.addParametersPane(mainPane, borderPane, paramFields, valuesFields);
+        borderPane.setLeft(parametersPane);
     }
-    public static void actionValuesButton(BorderPane mainPane, BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
-        BorderPane valuesPane = View.addValuesPane(mainPane, borderPane, listOfParamFields, listOfValuesFields);
+
+    public static void actionValuesButton(BorderPane mainPane,
+                                          BorderPane borderPane,
+                                          List<TextField> paramFields,
+                                          List<TextField> valuesFields) {
+        BorderPane valuesPane = View.addValuesPane(mainPane, borderPane, paramFields, valuesFields);
         borderPane.setLeft(valuesPane);
     }
 

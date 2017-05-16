@@ -116,7 +116,7 @@ public class View extends Application {
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
         ObservableList<XYChart.Data<Number, Number>> datas = FXCollections.observableArrayList();
         for(int i = 0; i < values.size();i++){
-            datas.add(new XYChart.Data<>(values.get(i).get(1), values.get(i).get(0)));
+            datas.add(new XYChart.Data<>(values.get(i).get(0), values.get(i).get(1)));
         }
         series.setData(datas);
         numberLineChart.getStyleClass().add("chart");
@@ -161,7 +161,7 @@ public class View extends Application {
         BorderPane leftPane = new BorderPane();
         HBox buttonBox = addBtnBox(mainPane, borderPane, listOfParamFields, listOfValuesFields);
         leftPane.setTop(buttonBox);
-
+        
         VBox vBox = addVBox(parameters, listOfValuesFields);
         leftPane.setCenter(vBox);
         vBox.getStyleClass().add("valuesPane");

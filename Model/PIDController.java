@@ -9,8 +9,8 @@ public class PIDController {
     private double dT;
     private double maxFx;
     private double maxFy;
-    private static final double DEFAULT_P = 1;
-    private static final double DEFAULT_I = 1;
+    private static final double DEFAULT_P = 7;
+    private static final double DEFAULT_I = -1;
     private static final double DEFAULT_D = 1;
 
     public PIDController(double maxFx, double maxFy, double dT) {

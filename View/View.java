@@ -41,7 +41,6 @@ public class View extends Application {
         BorderPane leftPane = addParametersPane(mainPane, borderPane, listOfParamFields, listOfValuesFields);
         borderPane.setLeft(leftPane);
 
-
         Scene scene = new Scene(borderPane, 1000, 600);
         scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
         primaryStage.setScene(scene);
@@ -51,7 +50,7 @@ public class View extends Application {
     private BorderPane addMainPane(List<ComboBox<String>> listOfComboBoxes){
         BorderPane mainPane = new BorderPane();
         mainPane.getStyleClass().add("mainPane");
-        mainPane.setCenter(addChart(addCheckedValues(), "example"));
+        //mainPane.setCenter(addChart(addCheckedValues(), "example"));
         mainPane.setBottom(addBottomPane(mainPane, listOfComboBoxes));
         return mainPane;
     }
@@ -106,7 +105,7 @@ public class View extends Application {
         graphButton.setOnAction(event -> Controller.actionInfoButton());
         return graphButton;
     }
-    public static LineChart<Number, Number> addChart(List<List<Double>> values, String chartTitle){
+    public static LineChart<Number, Number> addChart(List<List<Double>> values, List<List<Double>> planet, List<List<Double>> atmosphere, String chartTitle){
         NumberAxis x = new NumberAxis();
         NumberAxis y = new NumberAxis();
         LineChart<Number, Number> numberLineChart = new LineChart<>(x,y);
@@ -115,28 +114,59 @@ public class View extends Application {
         numberLineChart.setTitle(chartTitle);
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
         ObservableList<XYChart.Data<Number, Number>> datas = FXCollections.observableArrayList();
-        for(int i = 0; i < values.size();i++){
-            datas.add(new XYChart.Data<>(values.get(i).get(0), values.get(i).get(1)));
+        for (List<Double> value : values) {
+            datas.add(new XYChart.Data<>(value.get(1), value.get(0)));
         }
         series.setData(datas);
+
+        /*XYChart.Series<Number, Number> series2 = new XYChart.Series<>();
+        ObservableList<XYChart.Data<Number, Number>> datas2 = FXCollections.observableArrayList();
+        for (List<Double> value : planet) {
+            datas2.add(new XYChart.Data<>(value.get(1), value.get(0)));
+        }
+        series.setData(datas2);
+
+        XYChart.Series<Number, Number> series3 = new XYChart.Series<>();
+        ObservableList<XYChart.Data<Number, Number>> datas3 = FXCollections.observableArrayList();
+        for (List<Double> value : atmosphere) {
+            datas2.add(new XYChart.Data<>(value.get(1), value.get(0)));
+        }
+        series3.setData(datas3);
+        */
+        numberLineChart.getStyleClass().add("chart");
+        numberLineChart.getData().addAll(series/*, series2, series3*/);
+        return numberLineChart;
+    }
+    public static LineChart<Number, Number> addSecondChart(List<List<Double>> values, String chartTitle){
+        NumberAxis x = new NumberAxis();
+        NumberAxis y = new NumberAxis();
+        LineChart<Number, Number> numberLineChart = new LineChart<>(x,y);
+        numberLineChart.setCreateSymbols(false);
+        numberLineChart.setLegendVisible(false);
+        numberLineChart.setTitle(chartTitle);
+        XYChart.Series<Number, Number> series = new XYChart.Series<>();
+        ObservableList<XYChart.Data<Number, Number>> datas = FXCollections.observableArrayList();
+        for (List<Double> value : values) {
+            datas.add(new XYChart.Data<>(value.get(1), value.get(0)));
+        }
+        series.setData(datas);
+
         numberLineChart.getStyleClass().add("chart");
         numberLineChart.getData().add(series);
         return numberLineChart;
     }
     public static BorderPane addParametersPane(BorderPane mainPane,BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
         List<String> parameters = new ArrayList<>();
-        Collections.addAll(parameters, "PosX", "PosY","PowerX", "PowerY", "Probe Mass", "Radius","Atmosphere Radius", "Planet Mass");
+        Collections.addAll(parameters, "PosX", "PosY","vX", "vY", "Probe Mass", "Radius","Atmosphere Radius", "Planet Mass", "engineX", "engineY");
 
         BorderPane leftPane = new BorderPane();
 
         HBox buttonBox = addBtnBox(mainPane, borderPane, listOfParamFields, listOfValuesFields);
         leftPane.setTop(buttonBox);
 
-        VBox vBox = addVBox(parameters, listOfValuesFields);
+        VBox vBox = addVBox(parameters, listOfParamFields);
         leftPane.setCenter(vBox);
         vBox.getStyleClass().add("parametersPane");
-
-
         leftPane.setBottom(addBtnPane(mainPane,borderPane,  listOfParamFields, listOfValuesFields));
         return leftPane;
     }
@@ -146,7 +176,7 @@ public class View extends Application {
 
 
         Button calculateBut = new Button("Calculate");
-        calculateBut.setOnAction(event -> Landing.Control.Controller.actionCalculateButton(mainPane, listOfValuesFields));
+        calculateBut.setOnAction(event -> Landing.Control.Controller.actionCalculateButton(mainPane, listOfParamFields, listOfValuesFields));
 
         Button randomBut = new Button("Random parameters");
         randomBut.setOnAction(event -> Landing.Control.Controller.actionRandomButton(borderPane, listOfParamFields, listOfValuesFields));

@@ -31,12 +31,23 @@ public class Controller {
         alert.setContentText("This program calculates the trajectory of the object's motion according to speed and coordinates.");
         alert.showAndWait();
     }
-    public static void actionCalculateButton(BorderPane mainPane, List<TextField> listOfValuesFields){
+    public static void actionCalculateButton(BorderPane mainPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
         try{
-            MoveParams moveParams = new MoveParams();
+            MoveParams moveParams = new MoveParams(Double.parseDouble(listOfParamFields.get(0).getText()),
+                    Double.parseDouble(listOfParamFields.get(1).getText()),
+                    Double.parseDouble(listOfParamFields.get(2).getText()),
+                    Double.parseDouble(listOfParamFields.get(3).getText()),
+                    Double.parseDouble(listOfParamFields.get(4).getText()),
+                    Double.parseDouble(listOfParamFields.get(5).getText()),
+                    Double.parseDouble(listOfParamFields.get(6).getText()),
+                    Double.parseDouble(listOfParamFields.get(7).getText()),
+                    Double.parseDouble(listOfParamFields.get(8).getText()),
+                    Double.parseDouble(listOfParamFields.get(9).getText()));
             PIDController pidController = new PIDController(moveParams.getEngineThrustX(), moveParams.getEngineThrustY(), 0.1);
             Trajectory trajectory = new Trajectory(pidController, moveParams);
             List<List<Double>> values = new ArrayList<>();
+            List<List<Double>> planet = new ArrayList<>();
+            List<List<Double>> atmosphere = new ArrayList<>();
             stateList = trajectory.getTrajectory();
             for (State e : stateList) {
                 List<Double> xy = new ArrayList<>();
@@ -44,7 +55,7 @@ public class Controller {
                 xy.add(e.getCoordinates().getY());
                 values.add(xy);
             }
-            LineChart<Number, Number> numberLineChart = View.addChart(values, "Landing");
+            LineChart<Number, Number> numberLineChart = View.addChart(values,planet, atmosphere,  "Landing");
             mainPane.setCenter(numberLineChart);
             //listOfValuesFields.get(0).setText(String.valueOf(calcTrajectory.calculatePathLength()));
             //listOfValuesFields.get(1).setText(String.valueOf(calcTrajectory.fallingTime()));
@@ -70,9 +81,17 @@ public class Controller {
         }
     }
     public static void actionRandomButton(BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
-        BorderPane parametersPane = Landing.View.View.addParametersPane(borderPane, borderPane, listOfParamFields, listOfValuesFields);
-        borderPane.setLeft(parametersPane);
-
+        MoveParams moveParams = new MoveParams();
+        listOfParamFields.get(0).setText(String.valueOf(moveParams.getX()));
+        listOfParamFields.get(1).setText(String.valueOf(moveParams.getY()));
+        listOfParamFields.get(2).setText(String.valueOf(moveParams.getVx()));
+        listOfParamFields.get(3).setText(String.valueOf(moveParams.getVy()));
+        listOfParamFields.get(4).setText(String.valueOf(moveParams.getZondMass()));
+        listOfParamFields.get(5).setText(String.valueOf(moveParams.getPlanetRadius()));
+        listOfParamFields.get(6).setText(String.valueOf(moveParams.getAtmosphereRadius()));
+        listOfParamFields.get(7).setText(String.valueOf(moveParams.getPlanetMass()));
+        listOfParamFields.get(8).setText(String.valueOf(moveParams.getEngineThrustX()));
+        listOfParamFields.get(9).setText(String.valueOf(moveParams.getEngineThrustY()));
     }
     public static void actionParametersButton(BorderPane mainPane,BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
         BorderPane parametersPane = View.addParametersPane(mainPane, borderPane, listOfParamFields, listOfValuesFields);
@@ -102,7 +121,7 @@ public class Controller {
             xy.add(getFieldValue(e, yAxisComboBoxId));
             values.add(xy);
         }
-        LineChart<Number, Number> numberLineChart = View.addChart(values, String.format("%s(%s)", listOfComboBoxes.get(0).getValue(), listOfComboBoxes.get(1).getValue()));
+        LineChart<Number, Number> numberLineChart = View.addSecondChart(values, String.format("%s(%s)", listOfComboBoxes.get(0).getValue(), listOfComboBoxes.get(1).getValue()));
         mainPane.setCenter(numberLineChart);
     }
 

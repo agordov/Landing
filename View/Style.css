@@ -7,8 +7,11 @@
 }
 .chart-series-line {
     -fx-stroke-width: 3px;
-    -fx-stroke: #BDDA1C;
+    //-fx-stroke: #BDDA1C;
 }
+.default-color0.chart-series-line { -fx-stroke: #BDDA1C, gray; }
+.default-color1.chart-series-line { -fx-stroke: white, gray; }
+.default-color2.chart-series-line { -fx-stroke: blue, gray; }
 .axis {
     -fx-font-size: 1.1em;
     -fx-tick-label-fill: white;

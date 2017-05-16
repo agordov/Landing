@@ -80,7 +80,7 @@ public class MoveParams {
         this.engineThrustX = zondMass * g * 3;
     }
 
-    public MoveParams(double vx, double vy, double zondMass, double planetMass, double planetRadius, double atmosphereRadius, double x, double y, double engineThrustX, double engineThrustY) {
+    public MoveParams(double x, double y, double vx, double vy, double zondMass, double planetRadius, double atmosphereRadius, double planetMass, double engineThrustX, double engineThrustY) {
         this.vx = vx;
         this.vy = vy;
         this.zondMass = zondMass;

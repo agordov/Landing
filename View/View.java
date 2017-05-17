@@ -151,9 +151,9 @@ public class View extends Application {
         return hBox;
     }
 
-    public static LineChart<Number, Number> addChart(List<List<Double>> values,
+    public static LineChart<Number, Number> addChart(List<List<Double>> atmosphere,
                                                      List<List<Double>> planet,
-                                                     List<List<Double>> atmosphere,
+                                                     List<List<Double>> values,
                                                      String chartTitle) {
         NumberAxis x = new NumberAxis();
         NumberAxis y = new NumberAxis();
@@ -161,11 +161,12 @@ public class View extends Application {
         LineChart<Number, Number> numberLineChart = new LineChart<>(x, y);
         numberLineChart.setCreateSymbols(false);
         numberLineChart.setLegendVisible(false);
+        numberLineChart.setVerticalZeroLineVisible(true);
+        numberLineChart.set
         numberLineChart.setTitle(chartTitle);
 
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
         ObservableList<XYChart.Data<Number, Number>> datas = FXCollections.observableArrayList();
-
         for (List<Double> value : values) {
             datas.add(new XYChart.Data<>(value.get(0), value.get(1)));
         }
@@ -202,10 +203,9 @@ public class View extends Application {
         }
         series5.setData(datas5);
 
-
         numberLineChart.getStyleClass().add("chart");
         //numberLineChart.getData().add(series2);
-       numberLineChart.getData().addAll(series, series2, series3,series4,series5);
+       numberLineChart.getData().addAll(series4, series5, series2, series3, series);
         return numberLineChart;
     }
 

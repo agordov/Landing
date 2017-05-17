@@ -32,17 +32,17 @@ public class MoveParams {
     private static final double dT = 0.01;
     private static final double airK = 0.8;
 
-    private double vx; //checked
-    private double vy; //checked
+    private double vx;
+    private double vy;
 
-    private double probeMass; //checked
-    private double planetMass; //checked
+    private double probeMass;
+    private double planetMass;
 
-    private double planetRadius; //checked
-    private double atmosphereRadius; //checked
+    private double planetRadius;
+    private double atmosphereRadius;
 
-    private double x; //checked
-    private double y; //checked
+    private double x;
+    private double y;
 
     private double g;
     private double maxEngineThrustY;

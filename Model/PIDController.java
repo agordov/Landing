@@ -10,9 +10,9 @@ public class PIDController {
     private double maxFy;
     private double prevDX;
     private double prevDY;
-    private static final double DEFAULT_P = 10;
-    private static final double DEFAULT_I = 1;
-    private static final double DEFAULT_D = 5;
+    private static final double DEFAULT_P = 1.1; //увеличение повышает быстродействие и уменьшает устойчивость
+    private static final double DEFAULT_I = 0.2; //уменьшение приводит к меньшей ошибке в будущем и уменьшению запаса устойчивости
+    private static final double DEFAULT_D = 0.5; //увеличение увеличивает запас устойчивости и быстродействие
 
     public PIDController(double maxFx, double maxFy) {
         this(DEFAULT_P, DEFAULT_I, DEFAULT_D, maxFx, maxFy);

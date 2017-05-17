@@ -4,29 +4,34 @@ import java.lang.Math;
 
 public class MoveParams {
 
+<<<<<<< HEAD
     private static final double MAX_X = 1e10;
     private static final double MIN_X = -1e10;
+=======
+    public static final double MAX_X = 1e8;
+    public static final double MIN_X = -1e8;
+>>>>>>> 963488f0b08bda1fb2760e919a89e49027b9cbe8
 
-    private static final double MAX_Y = 1e8;
-    private static final double MIN_Y = -1e8;
+    public static final double MAX_Y = 1e8;
+    public static final double MIN_Y = -1e8;
 
-    private static final double MAX_VX = 1e6;
-    private static final double MIN_VX = -1e6;
+    public static final double MAX_VX = 1e6;
+    public static final double MIN_VX = -1e6;
 
-    private static final double MAX_VY = 1e6;
-    private static final double MIN_VY = -1e6;
+    public static final double MAX_VY = 1e6;
+    public static final double MIN_VY = -1e6;
 
-    private static final double MAX_ZONDMASS = 5000;
-    private static final double MIN_ZONDMASS = 60;
+    public static final double MAX_ZONDMASS = 5000;
+    public static final double MIN_ZONDMASS = 60;
 
-    private static final double MAX_PLANETMASS = 1.89e27;
-    private static final double MIN_PLANETMASS = 1.9e22;
+    public static final double MAX_PLANETMASS = 1.89e27;
+    public static final double MIN_PLANETMASS = 1.9e22;
 
-    private static final double MAX_PLANETRADIUS = 66.8e6;
-    private static final double MIN_PLANETRADIUS = 1.2e6;
+    public static final double MAX_PLANETRADIUS = 66.8e6;
+    public static final double MIN_PLANETRADIUS = 1.2e6;
 
-    private static final double MAX_ATMOSPHERERADIUS = 1e5;
-    private static final double MIN_ATMOSPHERERADIUS = 2e4;
+    public static final double MAX_ATMOSPHERERADIUS = 1e5;
+    public static final double MIN_ATMOSPHERERADIUS = 2e4;
 
     private static final double G = 6.6e-11;
     private static final double dT = 100;

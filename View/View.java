@@ -1,7 +1,7 @@
 package Landing.View;
 
 import Landing.Control.Controller;
-import Landing.Model.Tuple;
+import Landing.Model.MoveParams;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,10 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -44,7 +41,12 @@ public class View extends Application {
         LANDING_POSITION_BY_X,
         LANDING_POSITION_BY_Y
     }
-
+    private static final String domainsString = String.valueOf(MoveParams.MIN_X) + "<= Position X, Y >=" + String.valueOf(MoveParams.MAX_X) + "\n"
+            + String.valueOf(MoveParams.MIN_VX) + "<= Velicity by X, Y >=" + String.valueOf(MoveParams.MAX_VX)+ "\n"
+            + String.valueOf(MoveParams.MIN_ZONDMASS) + "<= Probe mass >=" + String.valueOf(MoveParams.MAX_ZONDMASS)+ "\n"
+            + String.valueOf(MoveParams.MIN_PLANETRADIUS) + "<= Planet radius >=" + String.valueOf(MoveParams.MAX_PLANETRADIUS)+ "\n"
+            + String.valueOf(MoveParams.MIN_ATMOSPHERERADIUS) + "<= Atmosphere radius >=" + String.valueOf(MoveParams.MAX_ATMOSPHERERADIUS )+ "\n"
+            + String.valueOf(MoveParams.MIN_PLANETMASS) + "<= Planet mass >=" + String.valueOf(MoveParams.MAX_PLANETMASS )+ "\n";
     public static final List<String> PARAMETERS = Arrays.asList(
             "Position by X",
             "Position by Y",
@@ -58,14 +60,14 @@ public class View extends Application {
             "Engine by Y"
     );
 
-    public static final List<String> VALUES = Arrays.asList(
+    private static final List<String> VALUES = Arrays.asList(
             "Time",
             "Max speed",
             "Landing position by X",
             "Landing position by Y"
     );
 
-    public static final List<String> COMBOS = Arrays.asList(
+    private static final List<String> COMBOS = Arrays.asList(
             "X",
             "Y",
             "Velocity by X",
@@ -119,11 +121,16 @@ public class View extends Application {
 
         buildButton.setOnAction(event -> Controller.actionBuildButton(mainPane, comboBoxes));
 
+        Button csvWrite = new Button("Write in CSV");
+
+        csvWrite.setOnAction(event -> Controller.actionCsvWrite());
+
         FlowPane.setMargin(xAxis, new Insets(5, 10, 5, 10));
         FlowPane.setMargin(yAxis, new Insets(5, 10, 5, 10));
         FlowPane.setMargin(buildButton, new Insets(5, 10, 5, 10));
+        FlowPane.setMargin(csvWrite, new Insets(5, 10, 5, 10));
 
-        flowPane.getChildren().addAll(xAxis, yAxis, buildButton);
+        flowPane.getChildren().addAll(xAxis, yAxis, buildButton, csvWrite);
         flowPane.getStyleClass().add("bottomPane");
         return flowPane;
     }
@@ -139,27 +146,6 @@ public class View extends Application {
 
         hBox.getChildren().addAll(addLabelPane(label), comboBox);
         return hBox;
-    }
-
-    private List<List<Double>> addCheckedValues() {
-        List<List<Double>> values = new ArrayList<>();
-        List<Double> xValues = new ArrayList<>();
-        List<Double> yValues = new ArrayList<>();
-
-        for (Double i = 0.0; i < 1000; i++) {
-            xValues.add(i);
-            yValues.add(i * i);
-        }
-
-        values.add(xValues);
-        values.add(yValues);
-        return values;
-    }
-
-    private Button addGraphButton(String textButton) {
-        Button graphButton = new Button(textButton);
-        graphButton.setOnAction(event -> Controller.actionInfoButton());
-        return graphButton;
     }
 
     public static LineChart<Number, Number> addChart(List<List<Double>> values,
@@ -258,6 +244,9 @@ public class View extends Application {
         Button randomBtn = new Button("Random parameters");
         randomBtn.setOnAction(event -> Landing.Control.Controller.actionRandomButton(borderPane, paramFields, valuesFields));
 
+        Button domainOfDefBtn = new Button("?");
+        domainOfDefBtn.setOnAction(event -> Landing.Control.Controller.actiondomainOfDefBtn());
+        btnPane.setCenter(domainOfDefBtn);
         btnPane.setLeft(randomBtn);
         btnPane.setRight(calculateBtn);
         return btnPane;
@@ -353,4 +342,13 @@ public class View extends Application {
 
         return fields;
     }
+    public static void addHelpAlert(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Domains of definitions");
+        alert.setHeaderText(null);
+        alert.setResizable(true);
+        alert.setContentText(domainsString);
+        alert.showAndWait();
+    }
+
 }

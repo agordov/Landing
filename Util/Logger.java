@@ -1,15 +1,17 @@
 package Landing.Util;
 
-import java.util.List;
-import java.text.SimpleDateFormat;
-import java.nio.file.*;
-import java.io.*;
-import java.util.Date;
-
 import Landing.Model.State;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 public class Logger {
-    public static final String DATE_FORMAT = "yy.MM.dd HH:mm:ssZ";
+    public static final String DATE_FORMAT = "yy.MM.dd HH-mm-ss";
 
     public static final String[] header = new String[] {
         "Position by X",

@@ -54,7 +54,7 @@ public class Controller {
             List<List<Double>> planet = new ArrayList<>();
             List<List<Double>> atmosphere = new ArrayList<>();
             stateList = trajectory.getTrajectory();
-            Logger.save(stateList);
+            //Logger.save(stateList);
             for (State e : stateList) {
                 List<Double> xy = new ArrayList<>();
                 xy.add(e.getCoordinates().getX());
@@ -172,5 +172,13 @@ public class Controller {
                 value = state.getT();
         }
         return value;
+    }
+
+    public static void actiondomainOfDefBtn() {
+        View.addHelpAlert();
+    }
+
+    public static void actionCsvWrite() {
+        Logger.save(stateList);
     }
 }

@@ -48,9 +48,11 @@ public class Controller {
             LineChart<Number, Number> numberLineChart = View.addChart(atmosphere, planet, values, "Landing");
             //numberLineChart.getData().add();
             mainPane.setCenter(numberLineChart);
-            //listOfValuesFields.get(0).setText(String.valueOf(calcTrajectory.calculatePathLength()));
-            //listOfValuesFields.get(1).setText(String.valueOf(calcTrajectory.fallingTime()));
-            //listOfValuesFields.get(2).setText(String.valueOf(calcTrajectory.calculateMaxHeight()));
+            listOfValuesFields.get(0).setText(String.format("%.3g", stateList.get(stateList.size() - 1).getT()));
+            listOfValuesFields.get(1).setText(String.format("%.3g", Math.sqrt(Math.pow(stateList.get(stateList.size() - 1).getVelocity().getX(), 2) +
+            Math.pow(stateList.get(stateList.size() - 1).getVelocity().getY(), 2))));
+            listOfValuesFields.get(2).setText(String.format("%.3g", stateList.get(stateList.size() - 1).getCoordinates().getX()));
+            listOfValuesFields.get(3).setText(String.format("%.3g", stateList.get(stateList.size() - 1).getCoordinates().getY()));
 
         }catch (IllegalArgumentException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -167,22 +169,20 @@ public class Controller {
         List<List<Double>> circle= new ArrayList<>();
         List<Double> xList = new ArrayList<>();
         List<Double> yList = new ArrayList<>();
-        List<Double> xList2 = new ArrayList<>();
-        List<Double> yList2 = new ArrayList<>();
-        for(double x = -radius; x<=radius;x+=radius/100){
+        for(double x = -radius; x<=radius;x+=radius/500){
             xList.add(x);
             yList.add(Math.sqrt(Math.pow(radius, 2) - Math.pow(x,2)));
         }
-        for(double x = radius; x>=-radius;x-=radius/100){
-            xList2.add(x);
-            yList2.add(-Math.sqrt(Math.pow(radius, 2) - Math.pow(x,2)));
+        xList.add(radius);
+        yList.add(0.0);
+        for(double x = radius; x>=-radius;x-=radius/500){
+            xList.add(x);
+            yList.add(-Math.sqrt(Math.pow(radius, 2) - Math.pow(x,2)));
         }
-        //System.out.println(yList.get(10));
-        //System.out.println(xList.get(1999));
+        xList.add(-radius);
+        yList.add(0.0);
         circle.add(xList);
         circle.add(yList);
-        circle.add(xList2);
-        circle.add(yList2);
         return circle;
     }
 }

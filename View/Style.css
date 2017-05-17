@@ -9,11 +9,9 @@
     -fx-stroke-width: 3px;
     //-fx-stroke: #BDDA1C;
 }
-.default-color0.chart-series-line { -fx-stroke: blue, gray; -fx-fill: blue, gray; }
-.default-color1.chart-series-line { -fx-stroke: blue, gray; -fx-fill: blue, gray; }
-.default-color2.chart-series-line { -fx-stroke: red, gray; -fx-fill: red, gray; }
-.default-color3.chart-series-line { -fx-stroke: red, gray; -fx-fill: red, gray; }
-.default-color4.chart-series-line { -fx-stroke: #BDDA1C, gray; }
+.default-color0.chart-series-line { -fx-stroke: red; }
+.default-color1.chart-series-line { -fx-stroke: lightskyblue, gray; }
+.default-color2.chart-series-line { -fx-stroke: #BDDA1C, gray; }
 .axis {
     -fx-font-size: 1.1em;
     -fx-tick-label-fill: white;

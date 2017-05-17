@@ -21,7 +21,8 @@ public class Trajectory {
         //Tuple<Double, Double> plantPoint = nearestPoint(startParams.getX(), startParams.getY(), planetRadius);
         double dr = Math.sqrt(Math.pow(startParams.getY() - planetRadius, 2) + Math.pow(startParams.getX(), 2)); // типа приземляюсь в точку (0, R)
         //double  dr = Math.sqrt(Math.pow(startParams.getY() - plantPoint.getY(), 2) + Math.pow(startParams.getX() - plantPoint.getX(), 2)); // типа приземляюсь в точку (0, R)
-        trajectory.add(new State(new Tuple<>(startParams.getX(), startParams.getY()), new Tuple<>(startParams.getVx(), startParams.getVy()), new Tuple<>(0d, 0d), new Tuple<>(0d, 0d),new Tuple<>(0d, 0d), startParams.getProbeMass()));
+        trajectory.add(new State(new Tuple<>(startParams.getX(), startParams.getY()), new Tuple<>(startParams.getVx(),
+                startParams.getVy()), new Tuple<>(0d, 0d), new Tuple<>(0d, 0d),new Tuple<>(0d, 0d), startParams.getProbeMass(), dt));
 
         double distance = Math.sqrt(Math.pow(startParams.getY(), 2) + Math.pow(startParams.getX(), 2));
         double fOutX;

@@ -7,23 +7,24 @@ public class State {
     private Tuple<Double, Double> forceOut;
     private Tuple<Double, Double> forceIn;
     private Tuple<Double, Double> acceleration;
-    double t;
-    double m; //если мы всё же запилим с изменяющейся массой
+    private double t;
+    private double m; //если мы всё же запилим с изменяющейся массой
 
     public State() {
     }
 
     public State(State other) {
-        this(other.getCoordinates(), other.getVelocity(), other.getAcceleration(), other.getForceOut(), other.getForceIn(), other.getM());
+        this(other.getCoordinates(), other.getVelocity(), other.getAcceleration(), other.getForceOut(), other.getForceIn(), other.getM(), other.getT());
     }
 
-    public State(Tuple<Double, Double> coordinates, Tuple<Double, Double> velocity, Tuple<Double, Double> acceleration, Tuple<Double, Double> forceOut, Tuple<Double, Double> forceIn, double m) {
+    public State(Tuple<Double, Double> coordinates, Tuple<Double, Double> velocity, Tuple<Double, Double> acceleration, Tuple<Double, Double> forceOut, Tuple<Double, Double> forceIn, double m, double t) {
         this.coordinates = coordinates;
         this.velocity = velocity;
         this.acceleration = acceleration;
         this.forceOut = forceOut;
         this.forceIn = forceIn;
         this.m = m;
+        this.t = t;
     }
 
     public void setCoordinates(Tuple<Double, Double> coordinates) {

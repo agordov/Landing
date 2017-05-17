@@ -4,13 +4,8 @@ import java.lang.Math;
 
 public class MoveParams {
 
-<<<<<<< HEAD
     private static final double MAX_X = 1e10;
     private static final double MIN_X = -1e10;
-=======
-    public static final double MAX_X = 1e8;
-    public static final double MIN_X = -1e8;
->>>>>>> 963488f0b08bda1fb2760e919a89e49027b9cbe8
 
     public static final double MAX_Y = 1e8;
     public static final double MIN_Y = -1e8;

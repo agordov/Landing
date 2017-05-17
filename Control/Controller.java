@@ -94,7 +94,7 @@ public class Controller {
         String invalidParams = "" + (moveParams.checkX() ? "" : "X ") + (moveParams.checkY() ? "" : "Y ") +
                 (moveParams.checkVx() ? "" : "Vx ") + (moveParams.checkVy() ? "" : "Vy ") +
                 (moveParams.checkPlanetMass() ? "" : "Planet Mass ") + (moveParams.checkPlanetRadius() ? "" : "Planet Radius ") +
-                (moveParams.checkProbeMass() ? "" : "Probe Mass ") + (moveParams.checkAtmosphereRadius() ? "" : "Atmosphere Radius");
+                (moveParams.checkProbeMass() ? "" : "Probe Mass ") + (moveParams.checkAtmosphereRadius() ? "" : "Atmosphere Radius ");
         return invalidParams.equals("") ? "" : invalidParams;
     }
 
@@ -137,8 +137,8 @@ public class Controller {
     }
 
     public static void actionBuildButton(BorderPane mainPane, List<ComboBox<String>> listOfComboBoxes){
-        int xAxisComboBoxId = getComboBoxValueId(listOfComboBoxes.get(1));
-        int yAxisComboBoxId = getComboBoxValueId(listOfComboBoxes.get(0));
+        int xAxisComboBoxId = getComboBoxValueId(listOfComboBoxes.get(0));
+        int yAxisComboBoxId = getComboBoxValueId(listOfComboBoxes.get(1));
         List<List<Double>> values = new ArrayList<>();
         for (State e : stateList) {
             List<Double> xy = new ArrayList<>();
@@ -146,7 +146,7 @@ public class Controller {
             xy.add(getFieldValue(e, yAxisComboBoxId));
             values.add(xy);
         }
-        LineChart<Number, Number> numberLineChart = View.addSecondChart(values, String.format("%s(%s)", listOfComboBoxes.get(0).getValue(), listOfComboBoxes.get(1).getValue()));
+        LineChart<Number, Number> numberLineChart = View.addSecondChart(values, String.format("%s(%s)", listOfComboBoxes.get(1).getValue(), listOfComboBoxes.get(0).getValue()));
         mainPane.setCenter(numberLineChart);
     }
 

@@ -4,8 +4,8 @@ import java.lang.Math;
 
 public class MoveParams {
 
-    private static final double MAX_X = 1e8;
-    private static final double MIN_X = -1e8;
+    private static final double MAX_X = 1e10;
+    private static final double MIN_X = -1e10;
 
     private static final double MAX_Y = 1e8;
     private static final double MIN_Y = -1e8;
@@ -29,7 +29,7 @@ public class MoveParams {
     private static final double MIN_ATMOSPHERERADIUS = 2e4;
 
     private static final double G = 6.6e-11;
-    private static final double dT = 0.1;
+    private static final double dT = 100;
     private static final double airK = 0.8;
 
     private double vx; //checked
@@ -89,7 +89,7 @@ public class MoveParams {
         this.atmosphereRadius = atmosphereRadius;
         this.x = x;
         this.y = y;
-        this.g = g;
+        this.g = G * planetMass / Math.pow(planetRadius, 2);
         this.maxEngineThrustY = maxEngineThrustY;
         this.maxEngineThrustX = maxEngineThrustX;
     }

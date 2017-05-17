@@ -178,7 +178,7 @@ public class View extends Application {
         ObservableList<XYChart.Data<Number, Number>> datas = FXCollections.observableArrayList();
 
         for (List<Double> value : values) {
-            datas.add(new XYChart.Data<>(value.get(1), value.get(0)));
+            datas.add(new XYChart.Data<>(value.get(0), value.get(1)));
         }
 
         series.setData(datas);

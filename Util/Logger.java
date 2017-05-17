@@ -58,7 +58,7 @@ public class Logger {
                 file.write(Double.toString(state.getForceOut().getY()));
                 file.write("\n");
             }
-
+            file.flush();
             file.close();
 
         } catch(IOException e) {

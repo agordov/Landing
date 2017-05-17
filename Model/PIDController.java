@@ -3,14 +3,16 @@ package Landing.Model;
 public class PIDController {
 
     private double p;
-    private Tuple<Double, Double> integral;
     private double i;
     private double d;
     private double dT;
+    private Tuple<Double, Double> integral;
     private double maxFx;
     private double maxFy;
-    private static final double DEFAULT_P = 7;
-    private static final double DEFAULT_I = -1;
+    private double prevDX;
+    private double prevDY;
+    private static final double DEFAULT_P = 10;
+    private static final double DEFAULT_I = 0.1;
     private static final double DEFAULT_D = 1;
 
     public PIDController(double maxFx, double maxFy, double dT) {
@@ -21,26 +23,27 @@ public class PIDController {
         this.p = p;
         this.i = i;
         this.d = d;
-        this.integral = new Tuple<>(0d, 0d);
         this.maxFx = maxFx;
+        System.out.println(maxFx);
         this.maxFy = maxFy;
+        System.out.println(maxFy);
         this.dT = dT;
+        this.integral = new Tuple<>(0d, 0d);
+        this.prevDX = 0;
+        this.prevDY = 0;
     }
 
     public Tuple<Double, Double> countForces(double dX, double dY) {
-        integrate(dX, dY);
-        double Fx = p + i * integral.getX() + d * derivative(dX);
-        double Fy = p + i * integral.getY() + d * derivative(dY);
-        return new Tuple<>(Fx > maxFx ? maxFx : Fx, Fy > maxFy ? maxFy : Fy);
+        double Fx = p * dX + i * integral.getX() + d * (dX - prevDX);
+        prevDX = dX;
+        double Fy = p * dY + i * integral.getY() + d * (dY - prevDY);
+        prevDY = dY;
+        return new Tuple<>(Math.abs(Fx) > maxFx ? maxFx : Fx, Math.abs(Fy) > maxFy ? maxFy : Fy);
     }
 
-    private double derivative(double dV) {
-        return dV/dT;
-    }
-
-    private void integrate(double dX, double dY) {
-        integral.setX(integral.getX() + dX * dT);
-        integral.setY(integral.getY() + dY * dT);
+    private void setIntegral(double dX, double dY) {
+        integral.setX(integral.getX() + dX);
+        integral.setY(integral.getY() + dY);
     }
 
     public double getI() {

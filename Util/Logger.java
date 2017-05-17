@@ -11,9 +11,10 @@ import java.util.Date;
 import java.util.List;
 
 public class Logger {
-    public static final String DATE_FORMAT = "yy.MM.dd HH-mm-ss";
 
-    public static final String[] header = new String[] {
+    private static final String DATE_FORMAT = "yy.MM.dd HH-mm-ss";
+
+    private static final String[] header = new String[] {
         "Position by X",
         "Position by Y",
         "Velocity by X",
@@ -35,29 +36,29 @@ public class Logger {
             file.write(String.join(",", header) + "\n");
 
             for (State state : states) {
-                file.write(Double.toString(state.getCoordinates().getX()));
+                file.write(String.format("%.3g", state.getCoordinates().getX()));
                 file.write(",");
-                file.write(Double.toString(state.getCoordinates().getY()));
-                file.write(",");
-
-                file.write(Double.toString(state.getVelocity().getX()));
-                file.write(",");
-                file.write(Double.toString(state.getVelocity().getY()));
+                file.write(String.format("%.3g", state.getCoordinates().getY()));
                 file.write(",");
 
-                file.write(Double.toString(state.getAcceleration().getX()));
+                file.write(String.format("%.3g", state.getVelocity().getX()));
                 file.write(",");
-                file.write(Double.toString(state.getAcceleration().getY()));
+                file.write(String.format("%.3g", state.getVelocity().getY()));
                 file.write(",");
 
-                file.write(Double.toString(state.getForceIn().getX()));
+                file.write(String.format("%.3g", state.getAcceleration().getX()));
                 file.write(",");
-                file.write(Double.toString(state.getForceIn().getY()));
+                file.write(String.format("%.3g", state.getAcceleration().getY()));
+                file.write(",");
+
+                file.write(String.format("%.3g", state.getForceIn().getX()));
+                file.write(",");
+                file.write(String.format("%.3g", state.getForceIn().getY()));
                 file.write(",");
             
-                file.write(Double.toString(state.getForceOut().getX()));
+                file.write(String.format("%.3g", state.getForceOut().getX()));
                 file.write(",");
-                file.write(Double.toString(state.getForceOut().getY()));
+                file.write(String.format("%.3g", state.getForceOut().getY()));
                 file.write("\n");
             }
             file.flush();

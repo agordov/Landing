@@ -26,7 +26,7 @@ public class Trajectory {
 
 
 
-        while(dr > 0 && dr < 1e9) {
+        while(dr > 0 && dr < 1e12) {
             State state = new State(trajectory.get(trajectory.size() - 1));
             double distance = Math.sqrt(Math.pow(startParams.getY(), 2) + Math.pow(startParams.getX(), 2));
             double fOutX;

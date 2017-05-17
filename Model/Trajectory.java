@@ -27,18 +27,18 @@ public class Trajectory {
         double fOutX;
         double fOutY;
 
-
        // while(dr > 0 && dr < 1e10) {
-        while(distance > 0 && distance < 1e7) {
+        while(distance > planetRadius && distance < 2e8) {
+
             State state = new State(trajectory.get(trajectory.size() - 1));
             distance = Math.sqrt(Math.pow(state.getCoordinates().getY(), 2) + Math.pow(state.getCoordinates().getX(), 2));
 
-            fOutX = g * state.getM() * (-Math.signum(state.getCoordinates().getX())) * Math.pow(planetRadius, 2) / Math.pow(distance, 2);
-            fOutY = g * state.getM() * (-Math.signum(state.getCoordinates().getY())) * Math.pow(planetRadius, 2) / Math.pow(distance, 2);
+            fOutX = g * state.getM() * (-Math.signum(state.getCoordinates().getX())) * Math.pow(planetRadius, 2) / Math.pow(distance, 2) * this.getCos(state.getCoordinates().getX(), state.getCoordinates().getY());
+            fOutY = g * state.getM() * (-Math.signum(state.getCoordinates().getY())) * Math.pow(planetRadius, 2) / Math.pow(distance, 2) * this.getSin(state.getCoordinates().getX(), state.getCoordinates().getY());
 
             if(distance < radiusOfAtmosphere) {
-                fOutX -= airK * state.getVelocity().getX() * state.getVelocity().getX();
-                fOutY -= airK * state.getVelocity().getY() * state.getVelocity().getY();
+                fOutX -= Math.signum(state.getVelocity().getX()) * airK * state.getVelocity().getX() * state.getVelocity().getX();
+                fOutY -= Math.signum(state.getVelocity().getY()) * airK * state.getVelocity().getY() * state.getVelocity().getY();
             }
 
             state.setForceIn(startPid.countForces(-state.getCoordinates().getX(), -state.getCoordinates().getY() + startParams.getPlanetRadius()));
@@ -49,8 +49,8 @@ public class Trajectory {
             //залупные ифы
             double vX = state.getVelocity().getX() + state.getAcceleration().getX() * dt;
             double vY = state.getVelocity().getY() + state.getAcceleration().getY() * dt;
-            vX = Math.min(vX, startParams.getVx());
-            vY = Math.min(vY, startParams.getVy());
+            vX = Math.min(vX, MoveParams.getMaxVx());
+            vY = Math.min(vY, MoveParams.getMaxVy());
             state.setVelocity(new Tuple<>(vX, vY));
             double x = state.getCoordinates().getX() + state.getVelocity().getX() * dt;
             double y = state.getCoordinates().getY() + state.getVelocity().getY() * dt;
@@ -58,7 +58,7 @@ public class Trajectory {
             state.setCoordinates(new Tuple<>(x, y));
             state.setT(state.getT() + dt);
 
-            dr = Math.sqrt(Math.pow(state.getCoordinates().getY() - startParams.getPlanetRadius(), 2) + Math.pow(state.getCoordinates().getX(), 2)); // типа приземляюсь в точку (0, R)
+            //dr = Math.sqrt(Math.pow(state.getCoordinates().getY() - startParams.getPlanetRadius(), 2) + Math.pow(state.getCoordinates().getX(), 2)); // типа приземляюсь в точку (0, R)
            // dr = Math.sqrt(Math.pow(state.getCoordinates().getY() - plantPoint.getY(), 2) + Math.pow(state.getCoordinates().getX() - plantPoint.getX(), 2)); // типа приземляюсь в точку (0, R)
             trajectory.add(state);
 
@@ -70,6 +70,14 @@ public class Trajectory {
         double sinA = y / Math.sqrt(x * x + y * y);
         return new Tuple<>(radiusOfPlanet * cosA, radiusOfPlanet * sinA);
     }*/
+
+    private double getCos(double x, double y) {
+        return x / Math.sqrt(x * x + y * y);
+    }
+
+    private double getSin(double x, double y) {
+        return y / Math.sqrt(x * x + y * y);
+    }
 
     public List<State> getTrajectory() {
         return trajectory;

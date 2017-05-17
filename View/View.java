@@ -45,9 +45,9 @@ public class View extends Application {
             String.format("%.2g%s%.2g", MoveParams.getMinX(), " <= X, Y <= ", MoveParams.getMaxX()),
             String.format("%.2g%s%.2g", MoveParams.getMinVx(), " <= Vx, Vy <= ", MoveParams.getMaxVx()),
             String.format("%.2g%s%.2g", MoveParams.getMinZondmass(), " <= Probe Mass <= ", MoveParams.getMaxZondmass()),
-            String.format("%.2g%s%.2g", MoveParams.getMinPlanetradius(), " <= Planet Radius <= ", MoveParams.getMaxPlanetradius()),
+            String.format("%.2g%s%.2g", MoveParams.getMinPlanetRadius(), " <= Planet Radius <= ", MoveParams.getMaxPlanetRadius()),
             String.format("%.2g%s%.2g", MoveParams.getMinPlanetmass(), " <= Planet Mass <= ", MoveParams.getMaxPlanetmass()),
-            String.format("%.2g%s%.2g", MoveParams.getMinAtmosphereradius(), " <= Atmosphere thickness <= ", MoveParams.getMinAtmosphereradius())
+            String.format("%.2g%s%.2g", MoveParams.getMinAtmosphereRadius(), " <= Atmosphere thickness <= ", MoveParams.getMaxAtmosphereRadius())
     );
 
     public static final List<String> PARAMETERS = Arrays.asList(

@@ -29,7 +29,7 @@ public class MoveParams {
     private static final double MIN_ATMOSPHERERADIUS = 2e4;
 
     private static final double G = 6.6e-11;
-    private static final double dT = 0.1;
+    private static final double dT = 0.01;
     private static final double airK = 0.8;
 
     private double vx; //checked
@@ -223,19 +223,19 @@ public class MoveParams {
         return MIN_PLANETMASS;
     }
 
-    public static double getMaxPlanetradius() {
+    public static double getMaxPlanetRadius() {
         return MAX_PLANETRADIUS;
     }
 
-    public static double getMinPlanetradius() {
+    public static double getMinPlanetRadius() {
         return MIN_PLANETRADIUS;
     }
 
-    public static double getMaxAtmosphereradius() {
+    public static double getMaxAtmosphereRadius() {
         return MAX_ATMOSPHERERADIUS;
     }
 
-    public static double getMinAtmosphereradius() {
+    public static double getMinAtmosphereRadius() {
         return MIN_ATMOSPHERERADIUS;
     }
 }

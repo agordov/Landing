@@ -48,7 +48,7 @@ public class Controller {
             if (!status.equals("")) { //throw Exception if one of params is out of bounds
                 throw new IllegalArgumentException(status + "is/are out of bounds");
             }
-            PIDController pidController = new PIDController(moveParams.getMaxEngineThrustX(), moveParams.getMaxEngineThrustY(), 0.1);
+            PIDController pidController = new PIDController(moveParams.getMaxEngineThrustX(), moveParams.getMaxEngineThrustY());
             Trajectory trajectory = new Trajectory(pidController, moveParams);
             List<List<Double>> values = new ArrayList<>();
             List<List<Double>> planet = new ArrayList<>();

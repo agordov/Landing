@@ -4,17 +4,17 @@ import java.lang.Math;
 
 public class MoveParams {
 
-    private static final double MAX_X = 1e10;
-    private static final double MIN_X = -1e10;
+    private static final double MAX_X = 1e8;
+    private static final double MIN_X = -1e8;
 
-    private static final double MAX_Y = 1e10;
-    private static final double MIN_Y = -1e10;
+    private static final double MAX_Y = 1e8;
+    private static final double MIN_Y = -1e8;
 
-    private static final double MAX_VX = 1e6;
-    private static final double MIN_VX = -1e6;
+    private static final double MAX_VX = 1e4;
+    private static final double MIN_VX = -1e4;
 
-    private static final double MAX_VY = 1e6;
-    private static final double MIN_VY = -1e6;
+    private static final double MAX_VY = 1e4;
+    private static final double MIN_VY = -1e4;
 
     private static final double MAX_ZONDMASS = 5000;
     private static final double MIN_ZONDMASS = 60;
@@ -29,7 +29,7 @@ public class MoveParams {
     private static final double MIN_ATMOSPHERERADIUS = 2e4;
 
     private static final double G = 6.6e-11;
-    private static final double dT = 1;
+    private static final double dT = 0.1;
     private static final double airK = 0.8;
 
     private double vx; //checked

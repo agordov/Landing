@@ -33,31 +33,31 @@ public class Logger {
         
         try {
             BufferedWriter file = Files.newBufferedWriter(Paths.get(formatter.format(date)));
-            file.write(String.join(",", header) + "\n");
+            file.write(String.join(";", header) + "\n");
 
             for (State state : states) {
                 file.write(String.format("%.3g", state.getCoordinates().getX()));
-                file.write(",");
+                file.write(";");
                 file.write(String.format("%.3g", state.getCoordinates().getY()));
-                file.write(",");
+                file.write(";");
 
                 file.write(String.format("%.3g", state.getVelocity().getX()));
-                file.write(",");
+                file.write(";");
                 file.write(String.format("%.3g", state.getVelocity().getY()));
-                file.write(",");
+                file.write(";");
 
                 file.write(String.format("%.3g", state.getAcceleration().getX()));
-                file.write(",");
+                file.write(";");
                 file.write(String.format("%.3g", state.getAcceleration().getY()));
-                file.write(",");
+                file.write(";");
 
                 file.write(String.format("%.3g", state.getForceIn().getX()));
-                file.write(",");
+                file.write(";");
                 file.write(String.format("%.3g", state.getForceIn().getY()));
-                file.write(",");
+                file.write(";");
             
                 file.write(String.format("%.3g", state.getForceOut().getX()));
-                file.write(",");
+                file.write(";");
                 file.write(String.format("%.3g", state.getForceOut().getY()));
                 file.write("\n");
             }

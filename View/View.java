@@ -42,12 +42,12 @@ public class View extends Application {
         LANDING_POSITION_BY_Y
     }
     private static final String domainsString = String.format("%s\n%s\n%s\n%s\n%s\n%s\n",
-            MoveParams.MIN_X + " <= X, Y <= " + MoveParams.MAX_X,
-            MoveParams.MIN_VX + " <= Vx, Vy <= " + MoveParams.MAX_VX,
-            MoveParams.MIN_ZONDMASS + " <= Probe Mass <= " + MoveParams.MAX_ZONDMASS,
-            MoveParams.MIN_PLANETRADIUS + " <= Planet Radius <= " + MoveParams.MAX_PLANETRADIUS,
-            MoveParams.MIN_PLANETMASS + " <= Planet Mass <= " + MoveParams.MAX_PLANETMASS,
-            MoveParams.MIN_ATMOSPHERERADIUS + " <= Atmosphere thickness <= " + MoveParams.MAX_ATMOSPHERERADIUS
+            String.format("%.2g%s%.2g", MoveParams.MIN_X, " <= X, Y <= ", MoveParams.MAX_X),
+            String.format("%.2g%s%.2g", MoveParams.MIN_VX, " <= Vx, Vy <= ", MoveParams.MAX_VX),
+            String.format("%.2g%s%.2g", MoveParams.MIN_ZONDMASS, " <= Probe Mass <= ", MoveParams.MAX_ZONDMASS),
+            String.format("%.2g%s%.2g", MoveParams.MIN_PLANETRADIUS, " <= Planet Radius <= ", MoveParams.MAX_PLANETRADIUS),
+            String.format("%.2g%s%.2g", MoveParams.MIN_PLANETMASS, " <= Planet Mass <= ", MoveParams.MAX_PLANETMASS),
+            String.format("%.2g%s%.2g", MoveParams.MIN_ATMOSPHERERADIUS, " <= Atmosphere thickness <= ", MoveParams.MAX_ATMOSPHERERADIUS)
     );
 
     public static final List<String> PARAMETERS = Arrays.asList(

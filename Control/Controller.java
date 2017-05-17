@@ -123,8 +123,8 @@ public class Controller {
         List<List<Double>> values = new ArrayList<>();
         for (State e : stateList) {
             List<Double> xy = new ArrayList<>();
-            xy.add(getFieldValue(e, xAxisComboBoxId));
             xy.add(getFieldValue(e, yAxisComboBoxId));
+            xy.add(getFieldValue(e, xAxisComboBoxId));
             values.add(xy);
         }
         LineChart<Number, Number> numberLineChart = View.addSecondChart(values, String.format("%s(%s)", listOfComboBoxes.get(1).getValue(), listOfComboBoxes.get(0).getValue()));

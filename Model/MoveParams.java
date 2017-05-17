@@ -4,17 +4,17 @@ import java.lang.Math;
 
 public class MoveParams {
 
-    private static final double MAX_X = 1e8;
-    private static final double MIN_X = -1e8;
+    private static final double MAX_X = 1e6;
+    private static final double MIN_X = -1e6;
 
-    private static final double MAX_Y = 1e8;
-    private static final double MIN_Y = -1e8;
+    private static final double MAX_Y = 1e6;
+    private static final double MIN_Y = -1e6;
 
-    private static final double MAX_VX = 1e4;
-    private static final double MIN_VX = -1e4;
+    private static final double MAX_VX = 1e3;
+    private static final double MIN_VX = -1e3;
 
-    private static final double MAX_VY = 1e4;
-    private static final double MIN_VY = -1e4;
+    private static final double MAX_VY = 1e3;
+    private static final double MIN_VY = -1e3;
 
     private static final double MAX_ZONDMASS = 5000;
     private static final double MIN_ZONDMASS = 60;
@@ -22,7 +22,7 @@ public class MoveParams {
     private static final double MAX_PLANETMASS = 1.89e27;
     private static final double MIN_PLANETMASS = 1.9e22;
 
-    private static final double MAX_PLANETRADIUS = 66.8e5;
+    private static final double MAX_PLANETRADIUS = 5e5;
     private static final double MIN_PLANETRADIUS = 1.2e5;
 
     private static final double MAX_ATMOSPHERERADIUS = 1e5;
@@ -76,8 +76,8 @@ public class MoveParams {
         this.x = generationOfParams(MAX_X, MIN_X);
         this.y = generationOfY(x, planetRadius);
         this.g = G * planetMass / Math.pow(planetRadius, 2);
-        this.maxEngineThrustY = probeMass * g * 4;
-        this.maxEngineThrustX = probeMass * g * 3;
+        this.maxEngineThrustY = probeMass * g * 4 / 1e5;
+        this.maxEngineThrustX = probeMass * g * 3 / 1e5;
     }
 
     public MoveParams(double x, double y, double vx, double vy, double probeMass, double planetRadius, double atmosphereRadius, double planetMass, double maxEngineThrustX, double maxEngineThrustY) {

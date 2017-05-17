@@ -45,7 +45,7 @@ public class Controller {
                 xy.add(e.getCoordinates().getY());
                 values.add(xy);
             }
-            LineChart<Number, Number> numberLineChart = View.addChart(values, planet, atmosphere,  "Landing");
+            LineChart<Number, Number> numberLineChart = View.addChart(atmosphere, planet, values, "Landing");
             //numberLineChart.getData().add();
             mainPane.setCenter(numberLineChart);
             //listOfValuesFields.get(0).setText(String.valueOf(calcTrajectory.calculatePathLength()));

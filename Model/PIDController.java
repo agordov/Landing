@@ -12,7 +12,7 @@ public class PIDController {
     private double prevDY;
     private static final double DEFAULT_P = 10;
     private static final double DEFAULT_I = 1;
-    private static final double DEFAULT_D = 50;
+    private static final double DEFAULT_D = 5;
 
     public PIDController(double maxFx, double maxFy) {
         this(DEFAULT_P, DEFAULT_I, DEFAULT_D, maxFx, maxFy);

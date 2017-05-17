@@ -172,24 +172,40 @@ public class View extends Application {
 
         series.setData(datas);
 
-        /*XYChart.Series<Number, Number> series2 = new XYChart.Series<>();
+        XYChart.Series<Number, Number> series2 = new XYChart.Series<>();
         ObservableList<XYChart.Data<Number, Number>> datas2 = FXCollections.observableArrayList();
-        for (List<Double> value : planet) {
-            datas2.add(new XYChart.Data<>(value.get(1), value.get(0)));
+        for(int i = 0; i < planet.get(0).size();i ++){
+            datas2.add(new XYChart.Data<>(planet.get(0).get(i), planet.get(1).get(i)));
         }
-        series.setData(datas2);
+        series2.setData(datas2);
 
         XYChart.Series<Number, Number> series3 = new XYChart.Series<>();
         ObservableList<XYChart.Data<Number, Number>> datas3 = FXCollections.observableArrayList();
-        for (List<Double> value : atmosphere) {
-            datas2.add(new XYChart.Data<>(value.get(1), value.get(0)));
+        for(int i = 0; i < planet.get(2).size();i ++){
+            datas3.add(new XYChart.Data<>(planet.get(2).get(i), planet.get(3).get(i)));
+
         }
         series3.setData(datas3);
-        */
+
+        XYChart.Series<Number, Number> series4 = new XYChart.Series<>();
+        ObservableList<XYChart.Data<Number, Number>> datas4 = FXCollections.observableArrayList();
+        for(int i = 0; i < atmosphere.get(0).size();i ++){
+            datas4.add(new XYChart.Data<>(atmosphere.get(0).get(i), atmosphere.get(1).get(i)));
+        }
+        series4.setData(datas4);
+
+        XYChart.Series<Number, Number> series5 = new XYChart.Series<>();
+        ObservableList<XYChart.Data<Number, Number>> datas5 = FXCollections.observableArrayList();
+        for(int i = 0; i < atmosphere.get(2).size();i ++){
+            datas5.add(new XYChart.Data<>(atmosphere.get(2).get(i), atmosphere.get(3).get(i)));
+
+        }
+        series5.setData(datas5);
+
 
         numberLineChart.getStyleClass().add("chart");
-        numberLineChart.getData().add(series);
-//        numberLineChart.getData().addAll(series/*, series2, series3*/);
+        //numberLineChart.getData().add(series2);
+       numberLineChart.getData().addAll(series, series2, series3,series4,series5);
         return numberLineChart;
     }
 
@@ -351,6 +367,14 @@ public class View extends Application {
         alert.setHeaderText(null);
         alert.setResizable(true);
         alert.setContentText(domainsString);
+        alert.showAndWait();
+    }
+    public static void addCsvAlert(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Write in CSV");
+        alert.setHeaderText(null);
+        alert.setResizable(true);
+        alert.setContentText("Writed in CSV file");
         alert.showAndWait();
     }
 

@@ -16,22 +16,6 @@ public class Controller {
 
     private static List<State> stateList = new ArrayList<>(0);
 
-    private static void clearTextFields(List<TextField> listOfConstantFields, List<TextField> listOfFields){
-        listOfFields.get(0).clear();
-        listOfFields.get(1).clear();
-        listOfFields.get(2).clear();
-        listOfFields.get(3).clear();
-        listOfConstantFields.get(0).clear();
-        listOfConstantFields.get(1).clear();
-        listOfConstantFields.get(2).clear();
-    }
-    public static void actionInfoButton(){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
-        alert.setHeaderText(null);
-        alert.setContentText("This program calculates the trajectory of the object's motion according to speed and coordinates.");
-        alert.showAndWait();
-    }
     public static void actionCalculateButton(BorderPane mainPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
         try{
             MoveParams moveParams = new MoveParams(Double.parseDouble(listOfParamFields.get(0).getText()),
@@ -51,8 +35,8 @@ public class Controller {
             PIDController pidController = new PIDController(moveParams.getMaxEngineThrustX(), moveParams.getMaxEngineThrustY());
             Trajectory trajectory = new Trajectory(pidController, moveParams);
             List<List<Double>> values = new ArrayList<>();
-            List<List<Double>> planet = new ArrayList<>();
-            List<List<Double>> atmosphere = new ArrayList<>();
+            List<List<Double>> planet = addCircle(moveParams.getPlanetRadius());
+            List<List<Double>> atmosphere = addCircle(moveParams.getAtmosphereRadius());
             stateList = trajectory.getTrajectory();
             //Logger.save(stateList);
             for (State e : stateList) {
@@ -62,7 +46,6 @@ public class Controller {
                 values.add(xy);
             }
             LineChart<Number, Number> numberLineChart = View.addChart(values, planet, atmosphere,  "Landing");
-
             //numberLineChart.getData().add();
             mainPane.setCenter(numberLineChart);
             //listOfValuesFields.get(0).setText(String.valueOf(calcTrajectory.calculatePathLength()));
@@ -75,19 +58,17 @@ public class Controller {
             alert.setHeaderText(null);
             alert.setContentText("Error: " + e.getMessage());
             alert.showAndWait();
-            //borderPane.setCenter(null);
-            //Controller.clearTextFields(listOfConstantFields, listOfFields);
         }catch (OutOfMemoryError e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
             alert.setContentText("Error: out of memory. Arguments are too big");
             alert.showAndWait();
-            //borderPane.setCenter(null);
-            //Controller.clearTextFields(listOfConstantFields, listOfFields);
 
         }
     }
+
+
 
     //return "" if all move params are valid or string of invalid parameters
     private static String checkMoveParams(MoveParams moveParams) {
@@ -179,6 +160,29 @@ public class Controller {
     }
 
     public static void actionCsvWrite() {
+        View.addCsvAlert();
         Logger.save(stateList);
+    }
+    private static List<List<Double>> addCircle(double radius) {
+        List<List<Double>> circle= new ArrayList<>();
+        List<Double> xList = new ArrayList<>();
+        List<Double> yList = new ArrayList<>();
+        List<Double> xList2 = new ArrayList<>();
+        List<Double> yList2 = new ArrayList<>();
+        for(double x = -radius; x<=radius;x+=radius/100){
+            xList.add(x);
+            yList.add(Math.sqrt(Math.pow(radius, 2) - Math.pow(x,2)));
+        }
+        for(double x = radius; x>=-radius;x-=radius/100){
+            xList2.add(x);
+            yList2.add(-Math.sqrt(Math.pow(radius, 2) - Math.pow(x,2)));
+        }
+        //System.out.println(yList.get(10));
+        //System.out.println(xList.get(1999));
+        circle.add(xList);
+        circle.add(yList);
+        circle.add(xList2);
+        circle.add(yList2);
+        return circle;
     }
 }

@@ -121,11 +121,16 @@ public class View extends Application {
 
         buildButton.setOnAction(event -> Controller.actionBuildButton(mainPane, comboBoxes));
 
+        Button csvWrite = new Button("Write in CSV");
+
+        csvWrite.setOnAction(event -> Controller.actionCsvWrite());
+
         FlowPane.setMargin(xAxis, new Insets(5, 10, 5, 10));
         FlowPane.setMargin(yAxis, new Insets(5, 10, 5, 10));
         FlowPane.setMargin(buildButton, new Insets(5, 10, 5, 10));
+        FlowPane.setMargin(csvWrite, new Insets(5, 10, 5, 10));
 
-        flowPane.getChildren().addAll(xAxis, yAxis, buildButton);
+        flowPane.getChildren().addAll(xAxis, yAxis, buildButton, csvWrite);
         flowPane.getStyleClass().add("bottomPane");
         return flowPane;
     }
@@ -141,27 +146,6 @@ public class View extends Application {
 
         hBox.getChildren().addAll(addLabelPane(label), comboBox);
         return hBox;
-    }
-
-    private List<List<Double>> addCheckedValues() {
-        List<List<Double>> values = new ArrayList<>();
-        List<Double> xValues = new ArrayList<>();
-        List<Double> yValues = new ArrayList<>();
-
-        for (Double i = 0.0; i < 1000; i++) {
-            xValues.add(i);
-            yValues.add(i * i);
-        }
-
-        values.add(xValues);
-        values.add(yValues);
-        return values;
-    }
-
-    private Button addGraphButton(String textButton) {
-        Button graphButton = new Button(textButton);
-        graphButton.setOnAction(event -> Controller.actionInfoButton());
-        return graphButton;
     }
 
     public static LineChart<Number, Number> addChart(List<List<Double>> values,

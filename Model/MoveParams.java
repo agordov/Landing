@@ -4,32 +4,32 @@ import java.lang.Math;
 
 public class MoveParams {
 
-    public static final double MAX_X = 1e10;
-    public static final double MIN_X = -1e10;
+    private static final double MAX_X = 1e10;
+    private static final double MIN_X = -1e10;
 
-    public static final double MAX_Y = 1e8;
-    public static final double MIN_Y = -1e8;
+    private static final double MAX_Y = 1e10;
+    private static final double MIN_Y = -1e10;
 
-    public static final double MAX_VX = 1e6;
-    public static final double MIN_VX = -1e6;
+    private static final double MAX_VX = 1e6;
+    private static final double MIN_VX = -1e6;
 
-    public static final double MAX_VY = 1e6;
-    public static final double MIN_VY = -1e6;
+    private static final double MAX_VY = 1e6;
+    private static final double MIN_VY = -1e6;
 
-    public static final double MAX_ZONDMASS = 5000;
-    public static final double MIN_ZONDMASS = 60;
+    private static final double MAX_ZONDMASS = 5000;
+    private static final double MIN_ZONDMASS = 60;
 
-    public static final double MAX_PLANETMASS = 1.89e27;
-    public static final double MIN_PLANETMASS = 1.9e22;
+    private static final double MAX_PLANETMASS = 1.89e27;
+    private static final double MIN_PLANETMASS = 1.9e22;
 
-    public static final double MAX_PLANETRADIUS = 66.8e6;
-    public static final double MIN_PLANETRADIUS = 1.2e6;
+    private static final double MAX_PLANETRADIUS = 66.8e5;
+    private static final double MIN_PLANETRADIUS = 1.2e5;
 
-    public static final double MAX_ATMOSPHERERADIUS = 1e5;
-    public static final double MIN_ATMOSPHERERADIUS = 2e4;
+    private static final double MAX_ATMOSPHERERADIUS = 1e5;
+    private static final double MIN_ATMOSPHERERADIUS = 2e4;
 
     private static final double G = 6.6e-11;
-    private static final double dT = 100;
+    private static final double dT = 1;
     private static final double airK = 0.8;
 
     private double vx; //checked
@@ -89,9 +89,9 @@ public class MoveParams {
         this.atmosphereRadius = atmosphereRadius;
         this.x = x;
         this.y = y;
-        this.g = G * planetMass / Math.pow(planetRadius, 2);
         this.maxEngineThrustY = maxEngineThrustY;
         this.maxEngineThrustX = maxEngineThrustX;
+        this.g = G * planetMass / Math.pow(planetRadius, 2);
     }
 
     public boolean checkPlanetRadius() {
@@ -172,5 +172,70 @@ public class MoveParams {
 
     public double getAirK() {
         return airK;
+    }
+
+
+    public static double getMaxX() {
+        return MAX_X;
+    }
+
+    public static double getMinX() {
+        return MIN_X;
+    }
+
+    public static double getMaxY() {
+        return MAX_Y;
+    }
+
+    public static double getMinY() {
+        return MIN_Y;
+    }
+
+    public static double getMaxVx() {
+        return MAX_VX;
+    }
+
+    public static double getMinVx() {
+        return MIN_VX;
+    }
+
+    public static double getMaxVy() {
+        return MAX_VY;
+    }
+
+    public static double getMinVy() {
+        return MIN_VY;
+    }
+
+    public static double getMaxZondmass() {
+        return MAX_ZONDMASS;
+    }
+
+    public static double getMinZondmass() {
+        return MIN_ZONDMASS;
+    }
+
+    public static double getMaxPlanetmass() {
+        return MAX_PLANETMASS;
+    }
+
+    public static double getMinPlanetmass() {
+        return MIN_PLANETMASS;
+    }
+
+    public static double getMaxPlanetradius() {
+        return MAX_PLANETRADIUS;
+    }
+
+    public static double getMinPlanetradius() {
+        return MIN_PLANETRADIUS;
+    }
+
+    public static double getMaxAtmosphereradius() {
+        return MAX_ATMOSPHERERADIUS;
+    }
+
+    public static double getMinAtmosphereradius() {
+        return MIN_ATMOSPHERERADIUS;
     }
 }

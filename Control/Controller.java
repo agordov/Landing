@@ -173,4 +173,8 @@ public class Controller {
         }
         return value;
     }
+
+    public static void actiondomainOfDefBtn() {
+        View.addHelpAlert();
+    }
 }

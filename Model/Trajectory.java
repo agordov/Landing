@@ -14,7 +14,7 @@ public class Trajectory {
 
     private void generateTrajectory(PIDController startPid, MoveParams startParams) { // стоит ли мне dt передавать отдельно, или занести в статус?
         double dr = Math.sqrt(Math.pow(startParams.getY() - startParams.getPlanetRadius(), 2) + Math.pow(startParams.getX(), 2)); // типа приземляюсь в точку (0, R)
-        trajectory.add(new State(new Tuple<>(startParams.getX(), startParams.getY()), new Tuple<>(startParams.getVx(), startParams.getVy()), new Tuple<>(0d, 0d), new Tuple<>(0d, 0d),new Tuple<>(0d, 0d), startParams.getZondMass()));
+        trajectory.add(new State(new Tuple<>(startParams.getX(), startParams.getY()), new Tuple<>(startParams.getVx(), startParams.getVy()), new Tuple<>(0d, 0d), new Tuple<>(0d, 0d),new Tuple<>(0d, 0d), startParams.getProbeMass()));
 
         double radiusOfAtmosphere = startParams.getAtmosphereRadius();
         double g = startParams.getG();

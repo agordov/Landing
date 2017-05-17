@@ -32,21 +32,21 @@ public class MoveParams {
     private static final double dT = 0.1;
     private static final double airK = 0.8;
 
-    private double vx;
-    private double vy;
+    private double vx; //checked
+    private double vy; //checked
 
-    private double zondMass;
-    private double planetMass;
+    private double probeMass; //checked
+    private double planetMass; //checked
 
-    private double planetRadius;
-    private double atmosphereRadius;
+    private double planetRadius; //checked
+    private double atmosphereRadius; //checked
 
-    private double x;
-    private double y;
+    private double x; //checked
+    private double y; //checked
 
     private double g;
-    private double engineThrustY;
-    private double engineThrustX;
+    private double maxEngineThrustY;
+    private double maxEngineThrustX;
 
     private static double generationOfParams(double maxValue, double minValue) {
         return minValue + Math.random() * (maxValue - minValue);
@@ -69,33 +69,61 @@ public class MoveParams {
     public MoveParams() {
         this.vx = generationOfParams(MAX_VX, MIN_VX);
         this.vy = generationOfParams(MAX_VY, MIN_VY);
-        this.zondMass = generationOfParams(MAX_ZONDMASS, MIN_ZONDMASS);
+        this.probeMass = generationOfParams(MAX_ZONDMASS, MIN_ZONDMASS);
         this.planetMass = generationOfParams(MAX_PLANETMASS, MIN_PLANETMASS);
         this.planetRadius = generationOfParams(MAX_PLANETRADIUS, MIN_PLANETRADIUS);
         this.atmosphereRadius = planetRadius + generationOfParams(MAX_ATMOSPHERERADIUS, MIN_ATMOSPHERERADIUS);
         this.x = generationOfParams(MAX_X, MIN_X);
         this.y = generationOfY(x, planetRadius);
         this.g = G * planetMass / Math.pow(planetRadius, 2);
-        this.engineThrustY = zondMass * g * 4;
-        this.engineThrustX = zondMass * g * 3;
+        this.maxEngineThrustY = probeMass * g * 4;
+        this.maxEngineThrustX = probeMass * g * 3;
     }
 
-    public MoveParams(double x, double y, double vx, double vy, double zondMass, double planetRadius, double atmosphereRadius, double planetMass, double engineThrustX, double engineThrustY) {
+    public MoveParams(double x, double y, double vx, double vy, double probeMass, double planetRadius, double atmosphereRadius, double planetMass, double maxEngineThrustX, double maxEngineThrustY) {
         this.vx = vx;
         this.vy = vy;
-        this.zondMass = zondMass;
+        this.probeMass = probeMass;
         this.planetMass = planetMass;
         this.planetRadius = planetRadius;
         this.atmosphereRadius = atmosphereRadius;
         this.x = x;
         this.y = y;
         this.g = g;
-        this.engineThrustY = engineThrustY;
-        this.engineThrustX = engineThrustX;
+        this.maxEngineThrustY = maxEngineThrustY;
+        this.maxEngineThrustX = maxEngineThrustX;
     }
 
-    public MoveParams(double vx, double vy, double zondMass, double planetMass, double planetRadius, double atmosphereRadius, double x, double y) {
+    public boolean checkPlanetRadius() {
+        return planetRadius >= MIN_PLANETRADIUS && planetRadius <= MAX_PLANETRADIUS;
+    }
 
+    public boolean checkX() {
+        return x >= MIN_X && x <= MAX_X;
+    }
+
+    public boolean checkY() {
+        return y >= MIN_Y && y <= MAX_Y;
+    }
+
+    public boolean checkVx() {
+        return vx >= MIN_VX && vx <= MAX_VX;
+    }
+
+    public boolean checkVy() {
+        return vy >= MIN_VY && vy <= MAX_VY;
+    }
+
+    public boolean checkProbeMass() {
+        return probeMass >= MIN_ZONDMASS && probeMass <= MAX_ZONDMASS;
+    }
+
+    public boolean checkPlanetMass() {
+        return planetMass >= MIN_PLANETMASS && planetMass <= MAX_PLANETMASS;
+    }
+
+    public boolean checkAtmosphereRadius() {
+        return atmosphereRadius >= (planetRadius + MIN_ATMOSPHERERADIUS) && atmosphereRadius <= (planetRadius + MAX_ATMOSPHERERADIUS);
     }
 
     public double getX() {
@@ -114,8 +142,8 @@ public class MoveParams {
         return vy;
     }
 
-    public double getZondMass() {
-        return zondMass;
+    public double getProbeMass() {
+        return probeMass;
     }
 
     public double getPlanetMass() {
@@ -130,12 +158,12 @@ public class MoveParams {
         return atmosphereRadius;
     }
 
-    public double getEngineThrustY() {
-        return engineThrustY;
+    public double getMaxEngineThrustY() {
+        return maxEngineThrustY;
     }
 
-    public double getEngineThrustX() {
-        return engineThrustX;
+    public double getMaxEngineThrustX() {
+        return maxEngineThrustX;
     }
 
     public double getdT() {

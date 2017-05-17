@@ -5,13 +5,11 @@ import java.text.SimpleDateFormat;
 import java.nio.file.*;
 import java.io.*;
 import java.util.Date;
-import java.util.Arrays;
 
 import Landing.Model.State;
-import Landing.Model.Tuple;
 
 public class Logger {
-    public static final String DATE_FORMAT = "yyMMddHHmmssZ";
+    public static final String DATE_FORMAT = "yy.MM.dd HH:mm:ssZ";
 
     public static final String[] header = new String[] {
         "Position by X",

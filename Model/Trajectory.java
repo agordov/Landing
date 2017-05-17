@@ -33,20 +33,21 @@ public class Trajectory {
             State state = new State(trajectory.get(trajectory.size() - 1));
             distance = Math.sqrt(Math.pow(state.getCoordinates().getY(), 2) + Math.pow(state.getCoordinates().getX(), 2));
 
-            fOutX = g * state.getM() * (-Math.signum(state.getCoordinates().getX())) * Math.pow(planetRadius, 2) / Math.pow(distance, 2) * this.getCos(state.getCoordinates().getX(), state.getCoordinates().getY());
-            fOutY = g * state.getM() * (-Math.signum(state.getCoordinates().getY())) * Math.pow(planetRadius, 2) / Math.pow(distance, 2) * this.getSin(state.getCoordinates().getX(), state.getCoordinates().getY());
+            fOutX = g * state.getM() * (-Math.signum(state.getCoordinates().getX())) * Math.pow(planetRadius, 2) / Math.pow(distance, 2) * Math.abs(getCos(state.getCoordinates().getX(), state.getCoordinates().getY()));
+            fOutY = g * state.getM() * (-Math.signum(state.getCoordinates().getY())) * Math.pow(planetRadius, 2) / Math.pow(distance, 2) * Math.abs(getSin(state.getCoordinates().getX(), state.getCoordinates().getY()));
 
             if(distance < radiusOfAtmosphere) {
                 fOutX -= Math.signum(state.getVelocity().getX()) * airK * state.getVelocity().getX() * state.getVelocity().getX();
                 fOutY -= Math.signum(state.getVelocity().getY()) * airK * state.getVelocity().getY() * state.getVelocity().getY();
             }
 
-            state.setForceIn(startPid.countForces(-state.getCoordinates().getX(), -state.getCoordinates().getY() + startParams.getPlanetRadius()));
+            state.setForceIn(startPid.countForces(-state.getCoordinates().getX(), -state.getCoordinates().getY() /*+ startParams.getPlanetRadius()*/));
             state.setForceOut(new Tuple<>(fOutX, fOutY));
+
             double aX = (state.getForceIn().getX() + state.getForceOut().getX()) / state.getM();
             double aY = (state.getForceIn().getY() + state.getForceOut().getY()) / state.getM();;
             state.setAcceleration(new Tuple<>(aX, aY));
-            //залупные ифы
+
             double vX = state.getVelocity().getX() + state.getAcceleration().getX() * dt;
             double vY = state.getVelocity().getY() + state.getAcceleration().getY() * dt;
             vX = Math.min(vX, MoveParams.getMaxVx());
@@ -61,7 +62,6 @@ public class Trajectory {
             //dr = Math.sqrt(Math.pow(state.getCoordinates().getY() - startParams.getPlanetRadius(), 2) + Math.pow(state.getCoordinates().getX(), 2)); // типа приземляюсь в точку (0, R)
            // dr = Math.sqrt(Math.pow(state.getCoordinates().getY() - plantPoint.getY(), 2) + Math.pow(state.getCoordinates().getX() - plantPoint.getX(), 2)); // типа приземляюсь в точку (0, R)
             trajectory.add(state);
-
         }
     }
 

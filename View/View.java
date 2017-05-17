@@ -65,7 +65,7 @@ public class View extends Application {
 
     private static final List<String> VALUES = Arrays.asList(
             "Time",
-            "Max speed",
+            "land speed",
             "Landing position by X",
             "Landing position by Y"
     );

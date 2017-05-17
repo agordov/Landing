@@ -10,8 +10,8 @@
     //-fx-stroke: #BDDA1C;
 }
 .default-color0.chart-series-line { -fx-stroke: #BDDA1C, gray; }
-.default-color1.chart-series-line { -fx-stroke: white, gray; }
-.default-color2.chart-series-line { -fx-stroke: white, gray; }
+.default-color1.chart-series-line { -fx-stroke: red, gray; }
+.default-color2.chart-series-line { -fx-stroke: red, gray; }
 .default-color3.chart-series-line { -fx-stroke: blue, gray; }
 .default-color4.chart-series-line { -fx-stroke: blue, gray; }
 .axis {

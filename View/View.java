@@ -162,8 +162,8 @@ public class View extends Application {
         numberLineChart.setCreateSymbols(false);
         numberLineChart.setLegendVisible(false);
         numberLineChart.setVerticalZeroLineVisible(true);
-        numberLineChart.set
         numberLineChart.setTitle(chartTitle);
+        numberLineChart.setAxisSortingPolicy(LineChart.SortingPolicy.NONE);
 
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
         ObservableList<XYChart.Data<Number, Number>> datas = FXCollections.observableArrayList();

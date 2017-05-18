@@ -99,11 +99,11 @@ public class MoveParams {
     }
 
     public boolean checkX() {
-        return x >= MIN_X && x <= MAX_X;
+        return x >= MIN_X && x <= MAX_X && Math.abs(x) > planetRadius;
     }
 
     public boolean checkY() {
-        return y >= MIN_Y && y <= MAX_Y;
+        return y >= MIN_Y && y <= MAX_Y && Math.abs(y) > planetRadius;
     }
 
     public boolean checkVx() {

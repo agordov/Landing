@@ -2,6 +2,8 @@ package Landing.Control;
 
 import Landing.Model.*;
 import Landing.Util.Logger;
+import Landing.View.LeftPane;
+import Landing.View.MainPane;
 import Landing.View.View;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Alert;
@@ -45,7 +47,7 @@ public class Controller {
                 xy.add(e.getCoordinates().getY());
                 values.add(xy);
             }
-            LineChart<Number, Number> numberLineChart = View.addChart(atmosphere, planet, values);
+            LineChart<Number, Number> numberLineChart = MainPane.addChart(atmosphere, planet, values);
             //numberLineChart.getData().add();
             mainPane.setCenter(numberLineChart);
             listOfValuesFields.get(0).setText(String.format("%.3g", stateList.get(stateList.size() - 1).getT()));
@@ -99,7 +101,7 @@ public class Controller {
                                               BorderPane borderPane,
                                               List<TextField> paramFields,
                                               List<TextField> valuesFields) {
-        BorderPane parametersPane = View.addParametersPane(mainPane, borderPane, paramFields, valuesFields);
+        BorderPane parametersPane = LeftPane.addParametersPane(mainPane, borderPane, paramFields, valuesFields);
         borderPane.setLeft(parametersPane);
     }
 
@@ -107,7 +109,7 @@ public class Controller {
                                           BorderPane borderPane,
                                           List<TextField> paramFields,
                                           List<TextField> valuesFields) {
-        BorderPane valuesPane = View.addValuesPane(mainPane, borderPane, paramFields, valuesFields);
+        BorderPane valuesPane = LeftPane.addValuesPane(mainPane, borderPane, paramFields, valuesFields);
         borderPane.setLeft(valuesPane);
     }
 
@@ -125,11 +127,11 @@ public class Controller {
         List<List<Double>> values = new ArrayList<>();
         for (State e : stateList) {
             List<Double> xy = new ArrayList<>();
-            xy.add(getFieldValue(e, yAxisComboBoxId));
             xy.add(getFieldValue(e, xAxisComboBoxId));
+            xy.add(getFieldValue(e, yAxisComboBoxId));
             values.add(xy);
         }
-        LineChart<Number, Number> numberLineChart = View.addSecondChart(values, String.format("%s(%s)", listOfComboBoxes.get(1).getValue(), listOfComboBoxes.get(0).getValue()));
+        LineChart<Number, Number> numberLineChart = MainPane.addSecondChart(values, String.format("%s(%s)", listOfComboBoxes.get(1).getValue(), listOfComboBoxes.get(0).getValue()));
         mainPane.setCenter(numberLineChart);
     }
 

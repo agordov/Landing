@@ -4,7 +4,7 @@ public class Tuple<L, R> {
     private L x;
     private R y;
 
-    public Tuple(L x, R y) {
+    Tuple(L x, R y) {
         this.x = x;
         this.y = y;
     }

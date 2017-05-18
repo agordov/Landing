@@ -13,13 +13,13 @@ public class State {
     public State() {
     }
 
-    public State(State other) {
+    State(State other) {
         this(other.getCoordinates(), other.getVelocity(), other.getAcceleration(),
                 other.getForceOut(), other.getForceIn(), other.getM(), other.getT());
     }
 
-    public State(Tuple<Double, Double> coordinates, Tuple<Double, Double> velocity, Tuple<Double, Double> acceleration,
-                 Tuple<Double, Double> forceOut, Tuple<Double, Double> forceIn, double m, double t) {
+    State(Tuple<Double, Double> coordinates, Tuple<Double, Double> velocity, Tuple<Double, Double> acceleration,
+          Tuple<Double, Double> forceOut, Tuple<Double, Double> forceIn, double m, double t) {
         this.coordinates = coordinates;
         this.velocity = velocity;
         this.acceleration = acceleration;

@@ -62,7 +62,7 @@ public class MoveParams {
         return y;
     }
 
-    public double getG() {
+    double getG() {
         return g;
     }
 

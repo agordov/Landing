@@ -18,7 +18,7 @@ public class PIDController {
         this(DEFAULT_P, DEFAULT_I, DEFAULT_D, maxFx, maxFy);
     }
 
-    public PIDController(double p, double i, double d, double maxFx, double maxFy) {
+    private PIDController(double p, double i, double d, double maxFx, double maxFy) {
         this.p = p;
         this.i = i;
         this.d = d;
@@ -29,7 +29,7 @@ public class PIDController {
         this.prevDY = 0;
     }
 
-    public Tuple<Double, Double> countForces(double dX, double dY) {
+    Tuple<Double, Double> countForces(double dX, double dY) {
         setIntegral(dX, dY);
         double Fx = p * dX + i * integral.getX() + d * (dX - prevDX);
         prevDX = dX;

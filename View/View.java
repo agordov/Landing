@@ -22,25 +22,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class View extends Application {
-    public enum PARAMETERSE {
-        POSITION_BY_X,
-        POSITION_BY_Y,
-        VELOCITY_BY_X,
-        VELOCITY_BY_Y,
-        PROBE_MASS,
-        PLANET_RADIUS,
-        ATMOSPHERE_RADIUS,
-        PLANET_MASS,
-        ENGINE_BY_X,
-        ENGINE_BY_Y
-    }
-
-    public enum VALUESE {
-        TIME,
-        MAX_SPEED,
-        LANDING_POSITION_BY_X,
-        LANDING_POSITION_BY_Y
-    }
     private static final String domainsString = String.format("%s\n%s\n%s\n%s\n%s\n%s\n",
             String.format("%.2g%s%.2g", MoveParams.getMinX(), " <= X, Y <= ", MoveParams.getMaxX()),
             String.format("%.2g%s%.2g", MoveParams.getMinVx(), " <= Vx, Vy <= ", MoveParams.getMaxVx()),
@@ -50,7 +31,7 @@ public class View extends Application {
             String.format("%.2g%s%.2g", MoveParams.getMinAtmosphereRadius(), " <= Atmosphere thickness <= ", MoveParams.getMaxAtmosphereRadius())
     );
 
-    public static final List<String> PARAMETERS = Arrays.asList(
+    private static final List<String> PARAMETERS = Arrays.asList(
             "Position by X",
             "Position by Y",
             "Velocity by X",
@@ -78,9 +59,6 @@ public class View extends Application {
             "Power",
             "Time"
     );
-
-    private BorderPane paramPane = null;
-    private BorderPane valuesPane = null;
 
     public static void main(String[] args) {
         launch(args);
@@ -153,8 +131,7 @@ public class View extends Application {
 
     public static LineChart<Number, Number> addChart(List<List<Double>> atmosphere,
                                                      List<List<Double>> planet,
-                                                     List<List<Double>> values,
-                                                     String chartTitle) {
+                                                     List<List<Double>> values) {
         NumberAxis x = new NumberAxis();
         NumberAxis y = new NumberAxis();
 
@@ -162,10 +139,12 @@ public class View extends Application {
         numberLineChart.setCreateSymbols(false);
         numberLineChart.setLegendVisible(false);
         numberLineChart.setVerticalZeroLineVisible(true);
-        numberLineChart.setTitle(chartTitle);
+        numberLineChart.setTitle("Landing");
         numberLineChart.setAxisSortingPolicy(LineChart.SortingPolicy.NONE);
         numberLineChart.getStyleClass().add("chart");
-        numberLineChart.getData().addAll(addTrajSeries(values), addCircleSeries(planet), addCircleSeries(atmosphere));
+        numberLineChart.getData().add(addTrajSeries(values));
+        numberLineChart.getData().add(addCircleSeries(planet));
+        numberLineChart.getData().add(addCircleSeries(atmosphere));
         return numberLineChart;
     }
     private static XYChart.Series<Number, Number> addCircleSeries(List<List<Double>> values){
@@ -216,12 +195,11 @@ public class View extends Application {
 
         vBox.getStyleClass().add("parametersPane");
 
-        leftPane.setBottom(addParametersBtnPane(mainPane, borderPane, paramFields, valuesFields));
+        leftPane.setBottom(addParametersBtnPane(mainPane, paramFields, valuesFields));
         return leftPane;
     }
 
     private static BorderPane addParametersBtnPane(BorderPane mainPane,
-                                                   BorderPane borderPane,
                                                    List<TextField> paramFields,
                                                    List<TextField> valuesFields) {
         BorderPane btnPane = new BorderPane();
@@ -231,7 +209,7 @@ public class View extends Application {
         calculateBtn.setOnAction(event -> Landing.Control.Controller.actionCalculateButton(mainPane, paramFields, valuesFields));
 
         Button randomBtn = new Button("Random parameters");
-        randomBtn.setOnAction(event -> Landing.Control.Controller.actionRandomButton(borderPane, paramFields, valuesFields));
+        randomBtn.setOnAction(event -> Landing.Control.Controller.actionRandomButton(paramFields));
 
         Button domainOfDefBtn = new Button("?");
         domainOfDefBtn.setOnAction(event -> Landing.Control.Controller.actiondomainOfDefBtn());
@@ -322,7 +300,7 @@ public class View extends Application {
     private List<TextField> createTextFields(List<String> labels) {
         List<TextField> fields = new ArrayList<>();
 
-        for (String text : labels) {
+        for (String ignored : labels) {
             TextField field = new TextField();
             field.getStyleClass().add("textField");
             fields.add(field);

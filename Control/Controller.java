@@ -45,7 +45,7 @@ public class Controller {
                 xy.add(e.getCoordinates().getY());
                 values.add(xy);
             }
-            LineChart<Number, Number> numberLineChart = View.addChart(atmosphere, planet, values, "Landing");
+            LineChart<Number, Number> numberLineChart = View.addChart(atmosphere, planet, values);
             //numberLineChart.getData().add();
             mainPane.setCenter(numberLineChart);
             listOfValuesFields.get(0).setText(String.format("%.3g", stateList.get(stateList.size() - 1).getT()));
@@ -81,7 +81,7 @@ public class Controller {
         return invalidParams.equals("") ? "" : invalidParams;
     }
 
-    public static void actionRandomButton(BorderPane borderPane, List<TextField> listOfParamFields, List<TextField> listOfValuesFields){
+    public static void actionRandomButton(List<TextField> listOfParamFields){
         MoveParams moveParams = new MoveParams();
         listOfParamFields.get(0).setText(String.valueOf(moveParams.getX()));
         listOfParamFields.get(1).setText(String.valueOf(moveParams.getY()));

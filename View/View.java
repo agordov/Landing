@@ -164,7 +164,20 @@ public class View extends Application {
         numberLineChart.setVerticalZeroLineVisible(true);
         numberLineChart.setTitle(chartTitle);
         numberLineChart.setAxisSortingPolicy(LineChart.SortingPolicy.NONE);
-
+        numberLineChart.getStyleClass().add("chart");
+        numberLineChart.getData().addAll(addTrajSeries(values), addCircleSeries(planet), addCircleSeries(atmosphere));
+        return numberLineChart;
+    }
+    private static XYChart.Series<Number, Number> addCircleSeries(List<List<Double>> values){
+        XYChart.Series<Number, Number> series = new XYChart.Series<>();
+        ObservableList<XYChart.Data<Number, Number>> datas = FXCollections.observableArrayList();
+        for(int i = 0; i < values.get(0).size();i ++){
+            datas.add(new XYChart.Data<>(values.get(0).get(i), values.get(1).get(i)));
+        }
+        series.setData(datas);
+        return series;
+    }
+    private static XYChart.Series<Number, Number> addTrajSeries(List<List<Double>> values){
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
         ObservableList<XYChart.Data<Number, Number>> datas = FXCollections.observableArrayList();
         for (List<Double> value : values) {
@@ -172,28 +185,8 @@ public class View extends Application {
         }
 
         series.setData(datas);
-
-        XYChart.Series<Number, Number> series2 = new XYChart.Series<>();
-        ObservableList<XYChart.Data<Number, Number>> datas2 = FXCollections.observableArrayList();
-        for(int i = 0; i < planet.get(0).size();i ++){
-            datas2.add(new XYChart.Data<>(planet.get(0).get(i), planet.get(1).get(i)));
-        }
-        series2.setData(datas2);
-
-        XYChart.Series<Number, Number> series3 = new XYChart.Series<>();
-        ObservableList<XYChart.Data<Number, Number>> datas3 = FXCollections.observableArrayList();
-        for(int i = 0; i < atmosphere.get(0).size();i ++){
-            datas3.add(new XYChart.Data<>(atmosphere.get(0).get(i), atmosphere.get(1).get(i)));
-        }
-        series3.setData(datas3);
-
-
-        numberLineChart.getStyleClass().add("chart");
-        //numberLineChart.getData().add(series2);
-       numberLineChart.getData().addAll(series2, series3, series);
-        return numberLineChart;
+        return series;
     }
-
     public static LineChart<Number, Number> addSecondChart(List<List<Double>> values, String chartTitle) {
         NumberAxis x = new NumberAxis();
         NumberAxis y = new NumberAxis();
@@ -204,17 +197,8 @@ public class View extends Application {
         numberLineChart.setTitle(chartTitle);
         numberLineChart.setAxisSortingPolicy(LineChart.SortingPolicy.NONE);
 
-        XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        ObservableList<XYChart.Data<Number, Number>> datas = FXCollections.observableArrayList();
-
-        for (List<Double> value : values) {
-            datas.add(new XYChart.Data<>(value.get(1), value.get(0)));
-        }
-
-        series.setData(datas);
-
         numberLineChart.getStyleClass().add("chart");
-        numberLineChart.getData().add(series);
+        numberLineChart.getData().add(addTrajSeries(values));
         return numberLineChart;
     }
 
@@ -286,7 +270,6 @@ public class View extends Application {
             BorderPane borderPane = addTextPane(parameters.get(i), fields.get(i));
             vBox.getChildren().add(borderPane);
         }
-
         return vBox;
     }
 
